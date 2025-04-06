@@ -1,0 +1,891 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{cmap}
+\usepackage[T2A]{fontenc}
+\usepackage[english, russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2cm,right=1.5cm,top=2cm,bottom=2cm]{geometry}
+% \usepackage{mathtext}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{etoolbox}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+% \usepackage{nicematrix}
+\usepackage{graphicx}
+% \usepackage{tikz}
+% \usepackage{parskip}
+
+% Цвета для гиперссылок
+\definecolor{linkcolor}{HTML}{225ae2} % цвет ссылок
+\definecolor{urlcolor}{HTML}{225ae2} % цвет гиперссылок
+\hypersetup{
+    pdfstartview=FitH, 
+    linkcolor=linkcolor,
+    urlcolor=urlcolor,
+    colorlinks=true
+}
+
+\addto\captionsenglish{% Replace "english" with the language you use
+  \renewcommand{\contentsname}%
+    {Содержание}%
+}
+
+\parindent = 1cm
+\DeclareMathOperator{\End}{\mathrm{End}_{\mathbb{K}}}
+
+\newtheorem*{definition}{Определение}
+\newtheorem*{theorem}{\hspace*{\parindent}Теорема}
+\theoremstyle{definition}
+\newtheorem*{prof}{\hspace*{\parindent}Доказательство}
+\newtheorem*{consequense}{Следствие}
+\newtheorem*{lemma}{Лемма}
+\newtheorem*{subtheorem}{Утверждение}
+\newtheorem*{remark}{Замечание}
+
+
+\usepackage{titlesec}
+\titleformat{\section}{\LARGE \bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}
+
+
+\begin{document}
+
+\fontsize{14pt}{20pt}\selectfont
+
+\begin{titlepage}
+\newpage
+
+\begin{center}
+Московский государственный университет\\
+имени М.В.Ломоносова
+\end{center}
+
+\begin{center}
+Механико-математический факультет \\
+Кафедра высшей алгебры \\ 
+\end{center}
+
+\vspace{15em}
+
+\begin{center}
+\textsc{\textbf{Квантовые симметрии \linebreak в алгебре тройных чисел}}
+\end{center}
+
+\vspace{15em}
+
+
+
+%\vbox{%
+%  \hfill%
+%    \vbox{%
+%        \hbox{Выполнил студент:}%
+%        \hbox{Зазовский Л.С.}%
+%        \hbox{211 группа}%
+%        \hbox{Научный руководитель:}%
+%        \hbox{проф. Гордиенко А.С.}%
+%    }%
+%}
+
+\begin{flushright}
+\begin{minipage}{.30\textwidth}
+Выполнил студент:\\
+\vbox{%
+    \hfill%
+    \vbox{%
+        \hbox{211 группы}%
+        \hbox{Зазовский Л.С.      }%
+    }%
+}
+Научный руководитель:\\
+\vbox{%
+    \hfill%
+    \vbox{%
+        \hbox{проф. Гордиенко А.С.}%
+    }%
+}
+\end{minipage}
+\end{flushright}
+
+
+
+\vspace{\fill}
+
+\begin{center}
+Москва \\2025
+\end{center}
+
+\end{titlepage}
+
+    \newpage
+    \tableofcontents
+    \fontsize{14pt}{20pt}\selectfont
+    \newpage
+
+\section{Конечно двойственная алгебра Хопфа}
+
+\subsection{Структура конечного двойственного пространства}
+
+Пусть у нас задано векторное пространство $V$ над полем $\mathbb{K}$. 
+
+Известно, что если $V$ конечномерное, тогда $V \cong V^*$ и существует канонический изоморфизм между $V$ и $V^{**}$. Оказывается, что похожий результат верен в бесконечномерных пространствах. 
+
+\begin{definition} 
+Конечное двойственное пространство $V^\circ$"--- это подпространство $V^*$ такое, что для любой линейной функции $\alpha \in V^\circ$ её ядро имеет конечную коразмерность.
+\end{definition}
+
+В случае конечномерных пространств $V^\circ = V^*$.
+
+\begin{definition}
+    Пусть в $V$ выбран базис $(e_i)_{i \in \Lambda}$. Тогда 
+    двойственная система $(\varepsilon_i)_{i \in \Lambda}$ в $V^\circ$ "--- это система функций  таких, что для всех $i, j \in \Lambda$ верно соотношение $\varepsilon_i(e_j) = \delta_{ij}$, где $\delta_{ij}$ "--- символ Кронекера.
+\end{definition}
+
+В случае конечномерных пространств двойственная система окажется в точности системой координатных функций. 
+
+\begin{theorem}
+    Двойственная система является базисом в $V^\circ$
+\end{theorem}
+
+\begin{prof}
+    
+    Сначала докажем, что двойственная система полна в $V^\circ$. Рассмотрим некоторую линейную функцию $f$ из $V^\circ$.
+    Тогда существует векторное подпространство $W$ такое, что $V$, раскладывается в прямую сумму ${V = W \oplus \mathrm{Ker} (f)}$.
+
+    Рассмотрим проектор $\pi$ на подпространство $W$ вдоль $\mathrm{Ker}(f)$. Нетрудно, заметить что $\mathrm{Ker}(\pi) = \mathrm{Ker}(f)$ и $\mathrm{Im}(\pi) = W$. Значит $W \cong V/\mathrm{Ker}(f)$.
+    Отсюда следует, что $W$ имеет конечную размерность, обозначим её как $m$. Выберем базис $a_1, \dots, a_m$ в $W$.
+    Для любого вектора $v$ верно разложение $v = \lambda_1a_1+ \dots +\lambda_ma_m + u$, где $u$ некоторый вектор из $\mathrm{Ker}(f)$. Тогда $f(v) =  f(\lambda_1a_1+ \dots +\lambda_ma_m + u) = \lambda_1f(a_1)+ \dots +\lambda_mf(a_m)$. 
+    Мы получили, что значение $f$ на произвольном векторе является линейной комбинацией значений на $(a_i)_{i = 1}^m$
+
+    Так как $(e_i)_{i \in \Lambda}$ "--- базис, значит все $(a_j)_{j = 1}^m$ выражаются с помощью конечной линейной комбинации $(e_i)_{i \in \Lambda}$.
+    Отсюда понятно, что значение $f$ на произвольном векторе является конечной линейной комбинацией значений на конечном подмножестве базисных векторов $(e_i)_{i \in \Lambda}$. Обозначим это подмножество $e_{i_1}, \dots, e_{i_n}$.
+    Тогда можно выразить $f = f(e_{i_1})\varepsilon_{i_1} + \dots + f(e_{i_n})\varepsilon_{i_n}$.
+    А это значит, что двойственная система полна.
+
+    Теперь докажем линейную независимость двойственной системы. Рассмотрим линейную комбинацию некоторой конечной подсистемы $\lambda_{i_1}\varepsilon_{i_1} + \dots + \lambda_{i_n}\varepsilon_{i_n} = 0$. Подставим $e_{i_k}$, получим $\lambda_{i_k}\varepsilon_{i_k}(e_{i_k}) = 0$, а значит $\lambda_{i_k} = 0$. 
+    Взяв все возможные $k$ от $1$ до $n$ получим, что все коэффициенты равны нулю, что означает линейную независимость этой подсистемы. Следовательно все конечные подсистемы линейно независимы, а значит и двойственная система линейно независима. \qed
+
+\end{prof}
+
+\begin{remark}
+    В силу доказанной выше теоремы будем называть двойственную систему "--- конечно двойственным базисом.
+\end{remark}
+Для полного соответствия аналогичным результатам в случае конечномерных пространств остатётся доказать две нижеследующие теоремы.
+
+\begin{theorem}
+    Пусть задано векторное пространство $V$ над полем $\mathbb{K}$. Тогда $V \cong V^\circ$
+\end{theorem}
+
+\begin{prof}
+    Выберем в $V$ базис $(e_i)_{i \in \Lambda}$ и соответсвующий ему конечно двойственный базис $(\varepsilon_i)_{i \in \Lambda}$
+    Пусть $\varphi: V \to V^\circ$ "--- линейное отображение заданное на базисе $\varphi(e_i) := \varepsilon_i$. Очевидно, что $\varphi$ сюръективно.
+
+    Докажем инъективность. Пусть $\varphi(a) = \varphi(b)$ для некоторых $a, b \in V$. Тогда $\varphi(a-b) = 0$. Разложим $a-b$ по базису $V$: $a-b = \lambda_{i_1}e_{i_1} + \dots + \lambda_{i_n}e_{i_n}$.
+    Тогда $\varphi(\lambda_{i_1}e_{i_1} + \dots + \lambda_{i_n}e_{i_n}) = \lambda_{i_1}\varepsilon_{i_1} + \dots + \lambda_{i_n}\varepsilon_{i_n} = 0$. В силу линейной независимости $(\varepsilon_{i_k})_{k=1}^n$, получаем $\lambda_{i_1} =\dots=\lambda_{i_n} = 0$. Значит $a-b =0$, следовательно $\varphi$ инъективно. Тогда $\varphi$ изоморфизм. \qed
+\end{prof}
+
+\begin{theorem}
+    Существует канонический изоморфизм $\varphi: V \to V^{\circ\circ}$.
+\end{theorem}
+
+\begin{prof}
+    Определим $\varphi: V \to V^{\circ\circ}$, как $\varphi(u)(\alpha):= \alpha(u)$, для любых $u \in V$ и $\alpha \in V^\circ$. 
+    Докажем корректность определения, а именно тот факт, что $\varphi(u) \in V^{\circ\circ}$.
+    Ядро $\varphi(u)$ это множество линейных функций $\alpha$ таких, что $\alpha(u) = 0$.
+    Выберем базис $(e_i)_{i \in \Lambda}$ в $V$ и соответствующий ему конечно двойственный базис $(\varepsilon_i)_{i \in \Lambda}$ в $V^\circ$. Пусть $u = \lambda_{i_1}e_{i_1}+ \dots +\lambda_{i_m}e_{i_m}$, тогда $\varepsilon_j(u) = \lambda_j$, если для некоторого $k$ верно $j=i_k$, и 
+    $\varepsilon_j(u)= 0$ иначе. Отсюда получаем что $V^\circ/\mathrm{Ker}(\varphi(u)) \cong \langle\varepsilon_{i_1}, \dots , \varepsilon_{i_m} \rangle$, откуда следует, что $\mathrm{Ker}(\varphi(u))$ имеет конечную коразмерность.
+
+    Теперь докажем, что $\varphi$ "--- изоморфизм.
+    Пусть $\varphi(a)(\alpha) = \varphi(b)(\alpha)$ для любой функции $\alpha \in V^\circ$. 
+    Тогда для любого $i \in \Lambda$ верно $\varphi(a)(\varepsilon_i)= \varphi(b)(\varepsilon_i)$, иначе говоря $\varepsilon_i(a) = \varepsilon_i(b)$ для любого  $i \in \Lambda$. Это значит что $a$ и $b$ имеют одинаковые разложения по базису $(e_i)_{i \in \Lambda}$. Получаем, что $a = b$, следовательно $\varphi$ инъективен.
+
+    Пусть $f \in V^{\circ\circ}$. Выберем в $V^{\circ\circ}$ базис $(\epsilon_i)_{i \in \Lambda}$ конечно двойственный к $(\varepsilon_i)_{i \in \Lambda}$. 
+    Разложим функцию $f$ по $(\epsilon_i)_{i \in \Lambda}$: $f = \lambda_{i_1}\epsilon_{i_1} + \dots + \lambda_{i_k}\epsilon_{i_k}$. 
+    Рассмотрим вектор $u \in V$, такой что $u = \lambda_{i_1}e_{i_1} + \dots + \lambda_{i_k}e_{i_k}$ и докажем, что $\varphi(u) = f$.
+    
+    $f(\varepsilon_j) = \lambda_j$, если для некоторого $k$ верно, что $j = i_k$, иначе $f(\varepsilon_j) = 0$. $\varphi(u)(\varepsilon_j) = \varepsilon_j(u) = \lambda_j$, если для некоторого $k$ верно, что $j = i_k$, иначе $\varphi(u)(\varepsilon_j) = \varepsilon_j(u) = 0$.
+    Значит $f$ и $\varphi(u)$ совпадают на базисе, следовательно $f = \varphi(u)$. Тем самым мы доказали, что $\varphi$ сюръективен. \qed
+    
+\end{prof}
+
+Для удобства рассуждений введём ещё одно понятие.
+
+\begin{definition}
+
+Пусть задано векторное пространство $V$ над полем $\mathbb{K}$ и система $K \subseteq V^*$.
+Единицей линейной функции $\alpha \in K$ по системе $K$~--- будем называть вектор $v\in V$, такой что $\alpha(v) = 1$ и для любой линейной функции $\beta \in K$ отличной от $\alpha$ верно $\beta(v) = 0$
+\end{definition}
+Будем обозначать единицу линейной функции $\alpha$ как $\alpha^{(1)}$.
+Из рассуждений выше следует, что для любой функции из конечно двойственного базиса существует единица линейной функции.
+
+\newpage
+
+\subsection{Структура конечно двойственной алгебры Хопфа}
+
+Пусть задана $A$ "--- алгебра с единицей над полем $\mathbb{K}$. Рассмотрим подмножество линейных функций $A^\circ \subseteq A^*$, такое что в ядре любой функции $\alpha \in A^\circ$ содержится идеал конечной коразмерности. Тогда $\mu^*(A^\circ) \subseteq A^\circ \otimes A^\circ$, а значит можно определить конечную двойственную коалгебру.
+
+\begin{definition}
+    Конечная двойственная коалгебра $A^\circ$ "--- это коалгебра $(A^\circ, \mu^\circ, u^\circ)$, где $\mu^\circ$ и $u^\circ$ это ограничения $\mu^*$ и $u^*$ на $A^\circ$ соответственно.
+\end{definition}
+
+Как множество $A^\circ$ является подпространством в конечно двойственном пространстве к векторному пространству $A$. 
+Выберем в $A^\circ$ базис $(\varepsilon_i)_{i \in \Lambda}$ и дополним его до базиса всего конечно двойственного пространства.
+Рассмотрим конечно двойственный базис в $A$, в нём существует подсистема $(e_i)_{i \in \Lambda}$ из единиц линейных функций составляющих базис $A^\circ$. Она обладает следующим свойством $\varepsilon_i(e_j) = \delta_{ij}$, где $\delta_{ij}$ "--- символ Кронекера.
+
+Пусть задана $H$ "--- алгебра Хопфа над полем $\mathbb{K}$. Рассмотрим $H^\circ$ "--- конечную двойственную коалгебру. Как множество $H^\circ$ является подалгеброй в $H^*$, поэтому $H^\circ$ является алгеброй Хопфа.
+
+\begin{definition}
+    Пусть задана $H$ "--- алгебра Хопфа над полем $\mathbb{K}$. $H^\circ$ называют конечной двойственной алгеброй Хопфа.
+\end{definition}
+
+Здесь и далее мы пользуемся обозначениями Свидлера и для удобства опускаем знак суммы: $\bigtriangleup a = a_{(1)} \otimes a_{(2)}$. 
+Выпишем некоторые полезные соотношения, следующие из двойственности. Для любых $\alpha, \beta \in H^\circ$ и $h, g \in H$ верно:
+\begin{eqnarray}
+    \varepsilon\alpha = \alpha\varepsilon = \alpha \label{str1}\\
+    (\alpha\beta)(a) = \alpha(a_{(1)})\beta(a_{(2)}) \label{str2}\\
+    u^\circ(\alpha) = \alpha(1_H) \label{str3}\\
+    \bigtriangleup\alpha(a \otimes b) = \alpha(ab) \label{str4}
+\end{eqnarray}
+
+\newpage
+
+\section{Характеризация \texorpdfstring{$H$}{H}-модульной структуры}
+
+Пусть задана $A$ "--- конечномерная $H$-модульная алгебра с 1 над полем $\mathbb{K}$, где $H$ "--- алгебра Хопфа.
+
+Отображение $\psi: H \otimes A \to A$, такое что $\psi(h \otimes a) := ha$ для всех $h \in H$ и $a \in a$, называется $H$-модульной структурой. Определим гомоморфизм алгебр $\zeta: H \to \End(A)$ равенством $\zeta(h)(a) := \psi (h \otimes a)$.
+
+Выбрав базис в $A$ такой, что его первым элементом будет единица алгебры $A$, отождествим $\End(A)$ с $M_n(\mathbb{K})$.
+Тогда существуют такие $(\alpha_{ij})_{ij} \in H^\circ$, что \[\zeta(h) = 
+\begin{pmatrix}
+    \varepsilon(h) && \alpha_{12}(h) && \dots  && \alpha_{1n}(h)\\
+    0              && \alpha_{22}(h) && \dots  && \alpha_{2n}(h)\\
+    \vdots         && \vdots         && \ddots && \vdots          \\
+    0              && \alpha_{n2}(h) && \dots  && \alpha_{nn}(h)\\
+\end{pmatrix}
+\]
+
+Для удобства положим $\alpha_{11} = \varepsilon$ и $\alpha_{21} = \dots = \alpha_{n1}  = 0$ и обозначим за $\mathrm{K}$ базис $\langle\varepsilon, (\alpha_{ij})_{ij}\rangle$.
+
+Будем называть $\zeta(h)$ "--- матрицей модульной структуры $\psi$ . При так заданном отображении $\zeta$, верно $\zeta(H) = \mathrm{cosupp} \ \psi$. Кроме того, рассмотрев ранг матрицы модульной структуры, получаем $\mathrm{dim} \ \zeta(H) = \mathrm{dim}\  \langle K \rangle$. 
+
+Нетрудно заметить, что $\mathrm{Ker}(\zeta)$ совпадает с аннулятором $\langle \mathrm{K} \rangle$.
+Из того, что $\mathrm{Ker}(\zeta)$ "--- идеал конечной коразмерности, следует что в ядре любой функции из $\langle\mathrm{K}\rangle$ содержится идеал конечной коразмерности, а значит $\langle\mathrm{K}\rangle \subseteq H^\circ$. 
+
+Так как $\zeta$ гомоморфизм алгебр, для любых $a, b \in H$ верно $\zeta(ab)=\zeta(a)\zeta(b)$. 
+Значит для всех $1 \leq i, j \leq n$  верно $$
+    \alpha_{ij}(ab) = \sum\limits_{k=1}^{n}\alpha_{ik}(a)\alpha_{kj}(b) \eqno(*)
+$$. 
+
+Дополним $K$ до базиса $(\varepsilon_i)_{i \in \Lambda}$ в $H^\circ$, тогда существует система $(e_i)_{i \in \Lambda}$ в $H$, такая что $\varepsilon_i(e_j) = \delta_{ij}$, где $\delta_{ij}$ "--- символ Кронекера. 
+Разложим $\bigtriangleup\alpha_{ij}$ по базису $(\varepsilon_k \otimes \varepsilon_l)_{k, l \in \Lambda}$. Рассматривая $\bigtriangleup\alpha_{ij}$ от всех возможных $e_k \otimes e_l$ и используя (\ref{str4}) и $(*)$, получим 
+$$\bigtriangleup\alpha_{ij} = \sum\limits_{k=1}^{n}\alpha_{ik} \otimes \alpha_{kj}$$
+
+
+\newpage
+
+\section{Классификация модульных структур}
+
+\begin{theorem}
+	Пусть $\psi:H \otimes A\ \to \ A $~-- структура $H$-модульной алгебры с $1$ на $A = \mathbb{K}[x]/(x^3)$, где $H$~--- некоторая алгебра Хопфа, $\mathrm{char} \ \mathbb{K} \neq 3$ и в поле существует примитивный корень степени 3. Выберем базис в $A: \bar 1, \bar x, \bar x^2$ и отождествим $\End(A)$ с $M_3(\mathbb{K})$. Предположим, что коноситель действия это подалгебра верхнетреугольных матриц. Тогда $\psi$ эквивалентно одной из следующих модульных структур над $A$:
+    
+    \begin{enumerate}
+        \item действие поля $\mathbb{K}$ на алгебре $A$ умножением на скаляры; \label{scalar}
+        
+        \item действие групповой алгебры $\mathbb{K}\langle c\rangle_2$, заданное равенством 
+        ${c\bar{x} = -\bar{x}}$; \label{eps=b^2}
+        
+        \item действие групповой алгебры $\mathbb{K}\langle c \rangle_3$, заданное равенством $c\bar{x} = \xi \bar{x}$,
+        
+        где $\xi$ "--- примитивный корень из единицы степени $3$;\label{diagonal} 
+        
+        \item $H_9(\xi)$-действие, заданное равенствами $c\bar{x}=\xi\bar{x},\ v\bar{x}= \bar{1}$, 
+        
+        где $\xi$ "--- примитивный корень из единицы степени $3$. \label{all}
+        
+    \end{enumerate}
+\end{theorem}
+
+
+\begin{prof}
+    Определим отображение $\zeta:H \to \End(A)$ из равенства $\zeta(h)(a) := \psi(h \otimes a)$.
+    Выберем в $A$ базис $\bar 1, \bar x, \bar x^2$ и отождествим $\End(A)$ с $M_3(\mathbb{K})$. Тогда $\zeta(h)$ будет матрицей модульной структуры. Из условий теоремы следует, что матрица модульной структуры верхнетреугольная.
+    Для удобства изложения переобозначим её нижеследующим образом: \[
+    \zeta(h) = 
+    \begin{pmatrix}
+        \varepsilon(h) & \alpha(h) & \tau(h)\\
+         0 & \beta(h) & \theta(h) \\
+         0 & 0 & \varphi(h)
+    \end{pmatrix}    
+    \]
+    Из того, что $A$ "--- $H$-модульная алгебра с 1, следует 
+    $$h(\bar{x}^3)=(h_{(1)}\bar{x})(h_{(2)}\bar{x}^2) = 0 $$ 
+    $$h(\bar{x}^2)=(h_{(1)}\bar{x})(h_{(2)}\bar{x})$$
+    Используя определение $\zeta(h)$, получаем следующее
+    $$h\bar x= \alpha(h)\bar1 + \beta(h) \bar x$$
+    $$h\bar x^2 = \tau(h)\bar1 + \theta(h) \bar x + \varphi(h) \bar x^2$$
+    Тогда, используя $\bar x^3 = 0$, получим следующие соотношения
+    \[
+    (h_{(1)}\bar{x})(h_{(2)}\bar{x}) = \left( \alpha(h_{(1)}) \bar{1} + \beta(h_{(1)}) \right)
+    \left( \alpha(h_{(2)}) \bar{1} + \beta(h_{(2)}) \right)=
+    \]
+    \[
+     = \alpha^2(h)\bar{1} + (\alpha\beta + \beta\alpha)(h) \bar{x} + \beta^2(h) \bar{x}^2
+    \]
+    $$h\bar x^2 = (h_{(1)}\bar{x})(h_{(2)}\bar{x}) = \tau(h)\bar1 + \theta(h) \bar x + \varphi(h) \bar x^2 = \alpha^2(h)\bar{1} + (\alpha\beta + \beta\alpha)(h) \bar{x} + \beta^2(h) \bar{x}^2$$
+    А значит можно выразить  
+    \begin{align} \label{repl}
+        \tau &= \alpha^2 \notag \\
+        \theta &= \alpha\beta+\beta\alpha \\
+        \varphi &=\beta^2 \notag
+    \end{align}
+
+    \noindent Кроме того
+    \begin{multline*}
+        (h_{(1)}\bar{x})(h_{(2)}\bar{x}^2) = 
+        \left( \alpha(h_{(1)}) \bar{1} + \beta(h_{(1)}) \bar{x} \right)
+        \left( \tau(h_{(2)}) \bar{1} + \theta(h_{(2)}) \bar{x} + \varphi(h_{(2)}) \bar{x}^2 \right)=
+        \\
+        = (\alpha\tau)(h) \bar{1}
+        +(\alpha\theta + \beta\tau)(h)\bar{x}+(\alpha\varphi + \beta\theta)(h)\bar{x}^2
+        =0
+    \end{multline*}
+    Отсюда получаем
+    \begin{align*}
+        &\alpha \tau = 0\\
+        &\alpha \theta + \beta \tau = 0\\
+        &\alpha \varphi + \beta \theta = 0
+    \end{align*}
+    Воспользовавшись (\ref{repl}) получим
+    \begin{align}
+        &\alpha^3 = 0 \label{1}\\
+        &\alpha^2\beta+\alpha\beta\alpha + \beta\alpha^2 = 0 \label{2}\\
+        &\alpha\beta^2+\beta\alpha\beta+\beta^2\alpha = 0 \label{3}
+    \end{align}
+    
+    Из соотношений (\ref{repl}) выразим $\tau,\ \theta,\ \varphi$ и перепишем матрицу модульной структуры, используя эти выражения:
+    \[\zeta(h) = 
+    \begin{pmatrix}
+        \varepsilon(h) & \alpha(h) & \alpha^2(h)\\
+         0 & \beta(h) & (\alpha\beta + \beta\alpha)(h) \\
+         0 & 0 & \beta^2(h)
+    \end{pmatrix}\]
+
+    \noindentИз доказанного в предыдущем разделе \[\mathrm{dim} \ \zeta(H) = \mathrm{dim} \langle\varepsilon,\ \alpha,\ \beta,\ \alpha^2,\ \alpha\beta+\beta\alpha,\ \beta^2 \rangle \leq 6\]
+
+    \noindentЕсли $\mathrm{dim}\ \zeta(H) = 6$, тогда $\zeta(H)$~-- подалгебра всех верхнетреугольных матриц. Докажем, что в таком случае модульная структура $\psi$ эквивалентна модульной структуре \ref{all}.
+
+    Пусть $\psi_1:H_9(\xi) \otimes A \to A$ "--- модульная структура \ref{all}.
+    Определим гоморфизм алгебр $\zeta_1:H_9(\xi) \to M_3(\mathbb{K})$ с помощью соотношения ${\zeta_1(h)(a)=\psi_1(h \otimes a)}$.
+    Тогда мы получим \[
+    \zeta_1(c) = 
+    \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & \xi & 0\\
+        0 & 0 & \xi^2\\
+    \end{pmatrix},\ 
+    \zeta_1(v) = 
+    \begin{pmatrix}
+        0 & 1 & 0\\
+        0 & 0 & 1+\xi\\
+        0 & 0 & 0\\
+    \end{pmatrix}
+    \]
+
+    Выпишем образ базиса $(c^kv^l)_{0 \leq k,l \leq 2}$ в $\zeta(H)$:
+    \begin{eqnarray*}
+    &\zeta(1) = \begin{pmatrix}
+    1 & 0 & 0\\
+    0 & 1 & 0\\
+    0 & 0 & 1\\
+    \end{pmatrix},\
+    \zeta(c) = \begin{pmatrix}
+    1 & 0 & 0\\
+    0 & \xi & 0\\
+    0 & 0 & \xi^2\\
+    \end{pmatrix},\
+    \zeta(c^2) = \begin{pmatrix}
+    1 & 0 & 0\\
+    0 & \xi^2 & 0\\
+    0 & 0 & \xi\\
+    \end{pmatrix}\\
+    &\zeta(v) = \begin{pmatrix}
+    0 & 1 & 0\\
+    0 & 0 & 1+\xi\\
+    0 & 0 & 0\\
+    \end{pmatrix},\
+    \zeta(cv) = \begin{pmatrix}
+    0 & 1 & 0\\
+    0 & 0 & \xi+\xi^2\\
+    0 & 0 & 0\\
+    \end{pmatrix} 
+    \zeta(c^2v) = \begin{pmatrix}
+    0 & 1 & 0\\
+    0 & 0 & 1+\xi^2\\
+    0 & 0 & 0\\
+    \end{pmatrix}\\
+    &\zeta(v^2) = \begin{pmatrix}
+    0 & 0 & 1+\xi\\
+    0 & 0 & 0\\
+    0 & 0 & 0\\
+    \end{pmatrix},\
+    \zeta(cv^2) = \begin{pmatrix}
+    0 & 0 & 1+\xi\\
+    0 & 0 & 0\\
+    0 & 0 & 0\\
+    \end{pmatrix} 
+    \zeta(c^2v^2) = \begin{pmatrix}
+    0 & 0 & 1+\xi\\
+    0 & 0 & 0\\
+    0 & 0 & 0\\
+    \end{pmatrix}\\    
+    \end{eqnarray*}
+
+    Рассмотрим эти матрицы как вектора в базисе из матричных единиц и запишем их координаты построчно в матрицу: \[ M=
+    \begin{pmatrix}
+        1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1\\
+        1 & 0 & 0 & 0 & \xi & 0 & 0 & 0 & \xi^2\\
+        1 & 0 & 0 & 0 & \xi^2 & 0 & 0 & 0 & \xi\\
+        0 & 1 & 0 & 0 & 0 & 1+\xi & 0 & 0 & 0\\
+        0 & 1 & 0 & 0 & 0 & \xi+\xi^2 & 0 & 0 & 0\\
+        0 & 1 & 0 & 0 & 0 & 1+\xi^2 & 0 & 0 & 0\\
+        0 & 0 & 1+\xi & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 1+\xi & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 1+\xi & 0 & 0 & 0 & 0 & 0 & 0\\
+    \end{pmatrix}
+    \]
+    Нетрудно, проверить, что $\mathrm{rank}\ M = 6$, а значит $\dim \mathrm{cosupp} \ \psi_1 = 6$, откуда $\mathrm{cosupp}\ \psi_1$ совпадает c алгеброй верхнетреугольных матриц.
+    
+    \noindentПусть теперь $\mathrm{dim}\ \zeta(H) \leq 5$\par
+
+    В предыдущем разделе были доказаны разложения для результатов коумножения на элементах матрицы модульной структуры. Выпишем их для наших функций:
+    \begin{eqnarray*}
+        \bigtriangleup\varepsilon &=& \varepsilon \otimes \varepsilon\\
+        \bigtriangleup\alpha &=& \varepsilon \otimes \alpha + \alpha \otimes \beta\\
+        \bigtriangleup\beta &=& \beta \otimes \beta\\
+        \bigtriangleup\alpha^2 &=& \varepsilon \otimes \alpha^2 + \alpha \otimes (\alpha\beta+\beta\alpha) + \alpha^2 \otimes \beta^2\\
+        \bigtriangleup(\alpha\beta+\beta\alpha) &=& \beta \otimes (\alpha\beta+\beta\alpha) + (\alpha\beta+\beta\alpha)\otimes \beta^2\\
+        \bigtriangleup\beta^2 &=& \beta^2 \otimes \beta^2\\
+    \end{eqnarray*}
+    Значит функции $\varepsilon,\ \beta, \beta^2$ являются группоподобными.
+    
+    Если $\varepsilon$ и $\beta$ линейно зависимы, тогда из того, что $\varepsilon \neq 0$, следует, что $\beta = \lambda\varepsilon$, при этом $1 = \beta(1_H)=\lambda\varepsilon(1_H)=\lambda$, значит $\beta = \varepsilon$.
+    Отсюда $\beta^2 = \varepsilon^2 = \varepsilon$. Подставим это в (\ref{3}).
+    \[
+        \alpha\varepsilon + \varepsilon\alpha \varepsilon + \varepsilon \alpha = 3\alpha = 0
+    \]
+    Из этого тождества и того, что $\mathrm{char} \ \mathbb{K} \neq 3$, следует что $\alpha = 0$. Тогда наша матриц модульной структуры выглядит следующим образом:\[
+    \zeta(h) = \begin{pmatrix}
+        \varepsilon(h) & 0 & 0\\
+        0 & \varepsilon(h) & 0\\
+        0 & 0 & \varepsilon(h)\\
+    \end{pmatrix}
+    \]
+    Значит $\zeta(H)$ - подалгебра скалярных матриц. Такая модульная структура эквивалентна структуре \ref{scalar}.
+    
+    \textbf{Далее будем полагать линейные функции $\varepsilon,\ \beta$ линейно независимыми.}
+
+    Предположим, что функции $\alpha,\ \varepsilon,\ \beta$ линейно зависимы, тогда существуют $\lambda, \mu$ такие, что $\alpha = \lambda \varepsilon + \mu \beta$. 
+    Подставив в равенство $h = 1_H$, получим $0 = \lambda + \mu$.
+    Значит \[\alpha = \lambda(\varepsilon - \beta)\]
+    В таком случае $\alpha$ коммутирует с $\beta$, а значит, с учётом (\ref{3})
+    \[
+        3\alpha\beta^2 = 3\lambda(\varepsilon-\beta)\beta^2 = 3\lambda(\beta^2-\beta^3)=0
+    \]
+    Тогда, с учётом $\mathrm{char} \ \mathbb{K} \neq 3$, получаем, что
+    \[
+        \lambda(\beta^2-\beta^3) = 0
+    \]
+    Так как $\beta$ группоподобный, значит существует обратный. Домножив это равенство на квадрат обратного к $\beta$:
+    \[
+        \lambda(\varepsilon-\beta) = 0
+    \]
+    А значит $\alpha = 0$. Значит $\alpha^2 = \alpha\beta+\beta\alpha = 0$. 
+    
+    \textbf{Случай 1.1}
+    
+    Если $\varepsilon, \beta, \beta^2$ - линейно независимы, тогда $\zeta(H)$ "--- это алгебра диагональных матриц. 
+    Докажем, что тогда модульная структуре $\psi$ эквивалентна структуре \ref{diagonal}.
+    Пусть $\psi_1: \mathbb{K}\langle c\rangle_3 \otimes A \to A$ "--- модульная структура \ref{diagonal}.
+    Определим гоморфизм алгебр $\zeta_1:\mathbb{K}\langle c\rangle_3 \to M_3(\mathbb{K})$ с помощью соотношения ${\zeta_1(h)(a)=\psi_1(h \otimes a)}$. Тогда получаем \[
+    \zeta(c) = \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & \xi & 0\\
+        0 & 0 & \xi^2\\
+    \end{pmatrix}
+    \]
+    Выберем в $\mathbb{K}\langle c\rangle_3$  базис $(c^k)_{0 \leq k \leq 2}$ и выпишем образ этого базиса:
+    \[
+    \zeta_1(1) = \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & 0 & 1\\
+    \end{pmatrix},\
+    \zeta_1(c) = \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & \xi & 0\\
+        0 & 0 & \xi^2\\
+    \end{pmatrix},\ 
+    \zeta_1(c^2) = \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & \xi^2 & 0\\
+        0 & 0 & \xi\\
+    \end{pmatrix}
+    \]
+
+    Рассмотрим эти матрицы как вектора в базисе из матричных единиц и запишем их координаты построчно в матрицу: \[
+        M = \begin{pmatrix}
+            1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1\\
+            1 & 0 & 0 & 0 & \xi & 0 & 0 & 0 & \xi^2\\
+            1 & 0 & 0 & 0 & \xi^2 & 0 & 0 & 0 & \xi\\
+        \end{pmatrix}
+    \]
+    Нетрудно проверить, что $\mathrm{rank}\ M = 3$, а значит $\dim \mathrm{cosupp}\ \psi_1 = \dim \zeta(H) = 3$, следовательно $\mathrm{cosupp}\ \psi_1$ "--- алгебра диагональных матриц.
+
+    \textbf{Случай 1.2}
+    
+    $\beta^2$ линейно зависим с $\varepsilon$ и $\beta$. Тогда существуют $\lambda, \mu$ такие, что $\beta^2 = \lambda \varepsilon+\mu \beta$. Подставим $h = 1_H$ и получим $1 = \lambda+\mu$, а значит $\beta^2 = \lambda \varepsilon + (1 - \lambda)\beta$
+    
+    Из группоподобности $\varepsilon,\ \beta$ и $\beta^2$ получаем 
+    \[
+    \varepsilon(\varepsilon^{(1)}\beta^{(1)}) = 0,\ \beta(\varepsilon^{(1)}\beta^{(1)}) = 0,\ \beta^2(\varepsilon^{(1)}\beta^{(1)}) = \lambda(1-\lambda)
+    \]
+    Используя эти результаты, подставим в разложение функции $\beta^2$  $\varepsilon^{(1)}\beta^{(1)}$, где $\varepsilon^{(1)}$ и $\beta^{(1)}$ "--- это единицы соответствующих линейных функций. Получим 
+    \[\lambda(1-\lambda) = \lambda*0 + (1-\lambda)*0 = 0\]
+
+    Если $\lambda = 0$, значит $\beta^2 = \beta$. Домножим это равенство на обратный к $\beta$ и получим $\beta = \varepsilon$, что противоречит линейной независимости $\varepsilon$ и $\beta$.
+
+    Следовательно $\lambda = 1$ и $\beta^2 = \beta$. Докажем, что в таком случае модульная структура $\psi$ эквивалентна структуре \ref{eps=b^2}.
+
+    Пусть $\psi_1: \mathbb{K}\langle c\rangle_2 \otimes A \to A$ "--- модульная структура \ref{eps=b^2}.
+    Определим гоморфизм алгебр $\zeta_1:\mathbb{K}\langle c\rangle_2 \to M_3(\mathbb{K})$ с помощью соотношения ${\zeta_1(h)(a)=\psi_1(h \otimes a)}$. Тогда получаем \[
+    \zeta(c) = \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & -1 & 0\\
+        0 & 0 & 1\\
+    \end{pmatrix}
+    \]
+
+    Выберем в $\mathbb{K}\langle c\rangle_3$  базис $(c^k)_{0 \leq k \leq 1}$ и выпишем образ этого базиса:
+    \[
+    \zeta_1(1) = \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & 0 & 1\\
+    \end{pmatrix},\
+    \zeta_1(c) = \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & -1 & 0\\
+        0 & 0 & 1\\
+    \end{pmatrix}
+    \]
+
+    Рассмотрим эти матрицы как вектора в базисе из матричных единиц и запишем их координаты построчно в матрицу: \[
+        M = \begin{pmatrix}
+            1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1\\
+            1 & 0 & 0 & 0 & -1 & 0 & 0 & 0 & 1\\
+        \end{pmatrix}
+    \]
+    Нетрудно проверить, что $\mathrm{rank}\ M = 2$, а значит $\dim \mathrm{cosupp}\ \psi_1 = \dim \zeta(H) = 2$, следовательно $\mathrm{cosupp}\ \psi_1$ "--- подалгебра диагональных матриц, такая что для любой матрицы $B$, содержащейся в ней, верно $b_{11}=b_{33}$.
+    
+    \textbf{Далее будем полагать $\varepsilon, \beta$ и $\alpha$ линейно независимыми.}
+
+    \textbf{Случай 2.1}
+    
+    \noindent Предположим, что $\alpha^2 = \lambda_1\varepsilon + \lambda_2\beta + \lambda_3 \alpha$, тогда подставив $h = 1_H$, получим $0 = \lambda_1+\lambda_2$. Обозначим $\lambda = \lambda_1,\ \mu = \lambda_3$ и перепишем разложение $\alpha^2$ с учётом этого.
+    \[\alpha^2 = \lambda(\varepsilon - \beta) + \mu \alpha\]
+    Домножив слева и справа на $\alpha$, получим 
+    \begin{eqnarray*}
+        \lambda(\alpha-\alpha\beta) + \mu\alpha^2 = 0\\
+        \lambda(\alpha-\beta\alpha) + \mu\alpha^2 = 0
+    \end{eqnarray*}
+    Пусть $\lambda \neq 0$, тогда $\alpha\beta = \beta\alpha$, иначе говоря $\alpha$ и $\beta$ коммутируют. С учётом этого и  (\ref{3}) получаем
+    \[
+    \alpha\beta^2+\beta\alpha\beta+\beta^2\alpha = 3\alpha\beta^2 = 0
+    \]
+
+    Тогда домножим это тождество на $\beta^{-2}$ и, учитывая что $\mathrm{char}\ \mathbb{K} \neq 3$ выведем, что $\alpha = 0$. Это противоречит линейной независимости $\varepsilon, \alpha$ и $\beta$.
+
+    Значит $\lambda = 0$, иначе говоря $\alpha^2 = \mu\alpha$. Тогда из (\ref{1}) следует 
+    \[
+    \alpha^3 = \mu\alpha^2 = \mu^2\alpha = 0
+    \]
+    Значит $\mu = 0$. 
+
+    \textbf{Случай 2.1.1}
+
+    Функции $\varepsilon,\ \alpha,\ \beta$ линейно независимы, $\alpha^2 =0$ и функция $\alpha\beta+\beta\alpha$ линейна независима с $\varepsilon,\ \alpha,\ \beta$.
+    Тогда \[
+    \alpha^2\left(\left(\alpha^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right)\right) = \alpha(\alpha^{(1)})(\alpha\beta+\beta\alpha)\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 1
+    \]
+    что невозможно.
+
+    \textbf{Случай 2.1.2}
+
+    Функции $\varepsilon,\ \alpha,\ \beta$ линейно независимы, $\alpha^2 =0$ и функция $\alpha\beta+\beta\alpha$ линейно выражается через $\varepsilon,\ \alpha,\ \beta$.
+
+    Пусть $\alpha\beta + \beta\alpha = \lambda_1\varepsilon+\lambda_2\beta + \mu\alpha$. Подставим $h = 1_H$ и получим, что $0 = \lambda_1 + \lambda_2$. Тогда обозначим $\lambda = \lambda_1,\ \mu = \lambda_3$ и перепишем разложение $\alpha\beta+\beta\alpha$ с помощью этого: \[
+    \alpha\beta+\beta\alpha = \lambda(\varepsilon-\beta) + \mu\alpha
+    \]
+    
+    С учётом $\alpha^2=0$ и (\ref{2}) получим \[
+    \alpha^2\beta+\alpha\beta\alpha+\beta\alpha^2 = \alpha\beta\alpha = 0
+    \]
+
+    Домножим разложение $\alpha\beta+\beta\alpha$ на $\alpha$ с обеих сторон 
+    \begin{eqnarray*}
+        \lambda(\alpha-\alpha\beta) = 0\\
+        \lambda(\alpha-\beta\alpha) = 0
+    \end{eqnarray*}
+    Пусть $\lambda \neq 0$, тогда $\alpha\beta=\beta\alpha = \alpha$. Из (\ref{3}) и того, что $\mathrm{char}\ \mathbb{K} \neq 3$, получаем $\alpha = 0$, что невозможно.
+    Значит $\lambda = 0$, иначе говоря $\alpha\beta+\beta\alpha = \mu\alpha$.
+
+    Тогда 
+    \begin{eqnarray*}
+    (\alpha\beta+\beta\alpha)(\varepsilon^{(1)}\alpha^{(1)}) = \alpha(\varepsilon^{(1)})(\alpha\beta+\beta\alpha)(\alpha^{(1)}) = 0\\
+    \alpha(\varepsilon^{(1)}\alpha^{(1)}) = \varepsilon(\varepsilon^{(1)})\alpha(\alpha^{(1)}) = 1
+    \end{eqnarray*}
+
+    Подставим в разложение $\alpha\beta+\beta\alpha$ $\varepsilon^{(1)}\alpha^{(1)}$ и, воспользовавшись результатами выше, получим $0 = \mu$, иначе говоря $\alpha\beta+\beta\alpha = 0$
+
+    Тогда из (\ref{3}) следует \[
+    \alpha\beta^2+\beta(\alpha\beta+\beta\alpha) = \alpha\beta^2=0
+    \]
+    Так как $\beta$ группоподобный, значит существует $\beta^{-1}$. Домножим на квадрат обратного справа и получим  $\alpha = 0$, что противоречит линейной независимости $\varepsilon,\ \beta,\ \alpha$.
+    
+    \textbf{Случай 2.2}
+
+    \textbf{Далее полагаем, что $\varepsilon, \alpha, \beta, \alpha^2$ линейно независимы.}
+
+    \textbf{Случай 2.2.1}
+
+    Функции $\varepsilon,\ \alpha,\ \alpha^2,\ \beta$ линейно независимы и функция $\alpha\beta+\beta\alpha$ линейно выражается через $\varepsilon,\ \alpha,\ \alpha^2,\ \beta$.
+    Тогда существуют $\lambda_i$ такие, что \[
+    \alpha\beta+\beta\alpha = \lambda_1\varepsilon+\lambda_2\beta +\lambda_3\alpha+\lambda_4\alpha^2
+     \]
+
+    Подставим $h = 1_H$, получим $0 = \lambda_1+\lambda_2$. Тогда обозначим $\lambda = \lambda_1,\ {\mu_1 = \lambda_3,}$ ${\mu_2 = \lambda_4}$ и перепишем разложение $\alpha\beta+\beta\alpha$ с помощью этого: \[
+    \alpha\beta+\beta\alpha = \lambda(\varepsilon-\beta)+\mu_1\alpha+\mu_2\alpha^2
+    \]
+
+    Рассмотрим (\ref{2}): 
+    \[
+    \alpha(\alpha\beta+\beta\alpha)+\beta\alpha^2 = 0
+    \]
+    Значит с учётом $\alpha^3 =0$: \[
+    \alpha(\alpha\beta+\beta\alpha)\alpha = (-\beta\alpha^2)\alpha = 0
+    \]
+
+    Тогда домножим разложение $\alpha\beta+\beta\alpha$ на $\alpha$ с обеих сторон:\[
+    0 = \lambda(\alpha^2-\alpha\beta\alpha)
+    \]
+    Пусть $\lambda \neq 0$, тогда $\alpha^2 = \alpha\beta\alpha$. Домножим $\alpha\beta+\beta\alpha$ на $\alpha^2$ слева и выпишем, что получится:
+    \begin{eqnarray*}
+        \alpha^2(\alpha\beta+\beta\alpha) = \alpha^2\beta\alpha= \alpha^3 = 0\\
+        (\alpha\beta+\beta\alpha)\alpha^2= \alpha\beta\alpha^2 = \alpha^3 = 0\\
+        \alpha^2(\alpha\beta+\beta\alpha) = \lambda(\alpha^2 - \alpha^2\beta)\\
+        (\alpha\beta+\beta\alpha)\alpha^2 = \lambda(\alpha^2 - \beta\alpha^2)\\
+    \end{eqnarray*}
+    Отсюда, с учётом предположения, что $\lambda\neq 0$, следует, что $\alpha^2 = \alpha^2\beta= \beta\alpha^2$. Подставим это в (\ref{2}), используя $\alpha^2 = \alpha\beta\alpha$, тогда
+    \[
+        \alpha^2\beta+\alpha\beta\alpha+\beta\alpha^2 = 3\alpha^2=0
+    \]
+    Что невозможно, так как $\mathrm{char}\ \mathbb{K} \neq 3$ и функция $\alpha^2$ линейно независима с $\varepsilon,\ \alpha,\ \beta$. Значит $\lambda = 0$, иначе говоря: \[
+    \alpha\beta+\beta\alpha = \mu_1\alpha+\mu_2\alpha^2
+    \]
+
+    Подставим разложение $\alpha\beta+\beta\alpha$ в (\ref{2})
+    \begin{eqnarray*}
+        \alpha(\alpha\beta+\beta\alpha)+\beta\alpha^2 = \mu_1\alpha^2 + \beta\alpha^2 = 0\\
+        \alpha^2\beta+(\alpha\beta+\beta\alpha)\alpha = \alpha^2\beta + \mu_1\alpha^2 = 0\\
+    \end{eqnarray*}
+    Сложим эти два равенства с учётом (\ref{2}) получим \[
+    2\mu_1\alpha^2 = \alpha\beta\alpha
+    \]
+    
+    Теперь домножим $\alpha\beta+\beta\alpha$ на $\alpha\beta$ слева :
+    \[
+        \alpha\beta(\alpha\beta+\beta\alpha) = \alpha(-\alpha\beta^2) = -\alpha^2\beta^2 = -\mu_1^2\alpha^2
+    \]
+    \[
+        \alpha\beta(\mu_1\alpha+\mu_2\alpha^2) = \mu_1\alpha\beta\alpha+\mu_2\alpha\beta\alpha^2=\mu_1\alpha\beta\alpha-\mu_1\mu_2\alpha^3 = \mu_1\alpha\beta\alpha
+    \]
+    А значит \[
+    \mu_1\alpha\beta\alpha = -\mu_1^2\alpha^2
+    \]
+    С учётом полученного выше соотношения приходит к выводу, что 
+    \begin{eqnarray*}
+        2\mu_1^2\alpha^2 &=& -\mu_1^2\alpha^2\\
+        3\mu_1^2\alpha^2 &=& 0
+    \end{eqnarray*}
+    Тогда, так как $\mathrm{char}\ \mathbb{K} \neq 3$ и функция $\alpha^2$ линейно независима с $\varepsilon,\ \alpha,\ \beta$, а значит $\alpha^2 \neq 0$, получаем, что $\mu_1 =0 $.
+    Тогда \[
+    \alpha\beta+\beta\alpha = \mu_2\alpha^2
+    \]
+    Но если мы рассмотрим
+    \begin{multline*}
+        \alpha^2 \left(\varepsilon^{(1)}\left(\alpha^2\right)^{(1)} \right) = \varepsilon(\varepsilon^{(1)})\alpha^2 \left(\left(\alpha^2\right)^{(1)}\right) +
+        \\
+        +\alpha(\varepsilon^{(1)})(\alpha\beta+\beta\alpha)\left(\left(\alpha^2\right)^{(1)}\right) + \alpha^2(\varepsilon^{(1)}) \beta^2 \left(\left(\alpha^2\right)^{(1)}\right) = 1
+    \end{multline*}
+    \begin{multline*}
+        (\alpha\beta+\beta\alpha)\left(\varepsilon^{(1)}\left(\alpha^2\right)^{(1)} \right) = \beta(\varepsilon^{(1)})(\alpha\beta+\beta\alpha)\left(\left(\alpha^2\right)^{(1)}\right)+
+        \\
+        +(\alpha\beta+\beta\alpha)(\varepsilon^{(1)})\beta^2\left(\left(\alpha^2\right)^{(1)}\right) = 0
+    \end{multline*}
+    Тогда, если мы подставим в разложение $\alpha\beta+\beta\alpha$ $\varepsilon^{(1)}\left(\alpha^2\right)^{(1)}$, получим \[
+    0 = \mu_2*1
+    \]
+    Значит $\alpha\beta+\beta\alpha = 0$. Отсюда с учётом (\ref{3}) получаем 
+    \[
+        \beta(\alpha\beta+\beta\alpha)+\alpha\beta^2 = \alpha\beta^2 = 0\\
+    \]
+    Но тогда домножив на обратный к $\beta^2$ получим $\alpha =0$, что противоречит линейной независимости $\alpha$ с $\varepsilon,\ \alpha^2,\ \beta$.
+    
+    \textbf{Случай 2.2.2}
+
+    \textbf{Далее полагаем Функции $\varepsilon,\ \alpha,\ \alpha^2,\ \beta,\ \alpha\beta+\beta\alpha$ линейно независимыми.}
+
+    \textbf{Случай 2.2.2.1}
+    
+    Функции $\varepsilon,\ \alpha,\ \alpha^2,\ \beta,\ \alpha\beta+\beta\alpha$ линейно независимы и функция $\beta^2$ линейно выражается через $\varepsilon,\ \alpha,\ \alpha^2,\ \beta$.
+    Тогда существуют $\lambda_i$ такие, что \[
+    \beta^2= \lambda_1\varepsilon+\lambda_2\beta +\lambda_3\alpha+\lambda_4\alpha^2 + \lambda_5(\alpha\beta+\beta\alpha)
+     \]
+
+    Подставим $h = 1_H$, получим $1 = \lambda_1+\lambda_2$. Тогда обозначим $\lambda = \lambda_1,\ {\mu_1 = \lambda_3,}$ ${\mu_2 = \lambda_4},\ {\mu_3 = \lambda_5}$ и перепишем разложение $\alpha\beta+\beta\alpha$ с помощью этого: 
+    \[
+    \beta^2 = \lambda\varepsilon + (1-\lambda)\beta+\mu_1\alpha+\mu_2\alpha^2 +\mu_3(\alpha\beta+\beta\alpha)
+    \]
+
+    Рассмотрим значения наших функций от $\left(\alpha^{(1)}\right)^2$
+    \begin{eqnarray*}
+    \varepsilon\left(\left(\alpha^{(1)}\right)^2\right) &=& 
+    \varepsilon\left(\alpha^{(1)}\right)\varepsilon\left(\alpha^{(1)}\right) = 0\\
+    %
+    \alpha\left(\left(\alpha^{(1)}\right)^2\right) &=&
+    \varepsilon\left(\alpha^{(1)}\right)\alpha\left(\alpha^{(1)}\right)+\alpha\left(\alpha^{(1)}\right)\beta\left(\alpha^{(1)}\right) = 0\\
+    %
+    \beta\left(\left(\alpha^{(1)}\right)^2\right) &=&
+    \beta\left(\alpha^{(1)}\right)\beta\left(\alpha^{(1)}\right) = 0\\
+    %
+    \alpha^2\left(\left(\alpha^{(1)}\right)^2\right) &=&
+    \varepsilon\left(\alpha^{(1)}\right)\alpha^2\left(\alpha^{(1)}\right)+
+    \alpha\left(\alpha^{(1)}\right)(\alpha\beta+\beta\alpha)\left(\alpha^{(1)}\right)+\\
+    &+& \alpha^2\left(\alpha^{(1)}\right)\beta\left(\alpha^{(1)}\right) = 0\\
+    %
+    (\alpha\beta+\beta\alpha)\left(\left(\alpha^{(1)}\right)^2\right) &=&
+    \beta\left(\alpha^{(1)}\right)(\alpha\beta+\beta\alpha)\left(\alpha^{(1)}\right)+\\
+    &+&(\alpha\beta+\beta\alpha)\left(\alpha^{(1)}\right)\beta^2\left(\alpha^{(1)}\right) = 0\\
+    %
+    \beta^2\left(\left(\alpha^{(1)}\right)^2\right) &=& \beta^2\left(\alpha^{(1)}\right)\beta^2\left(\alpha^{(1)}\right) = \mu_1^2\\
+    \end{eqnarray*}
+
+    Тогда получим \[
+    \beta^2\left(\left(\alpha^{(1)}\right)^2\right) = \mu_1^2 = 0
+    \]
+    Значит $\mu_1 = 0$, иначе говоря \[
+    \beta^2 = \lambda\varepsilon+(1-\lambda)\beta + \mu_2\alpha^2 + \mu_3(\alpha\beta+\beta\alpha)
+    \]
+
+    Рассмотрим значения наших функций от $\alpha^{(1)}(\alpha\beta+\beta\alpha)^{(1)}$
+    \begin{eqnarray*}
+    \varepsilon\left(\alpha^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=& 
+    \varepsilon\left(\alpha^{(1)}\right)\varepsilon\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 0\\
+    %
+    \alpha\left(\alpha^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=&
+    \varepsilon\left(\alpha^{(1)}\right)\alpha\left((\alpha\beta+\beta\alpha)^{(1)}\right)+\\
+    &+&\alpha\left(\alpha^{(1)}\right)\beta\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 0\\
+    %
+    \beta\left(\alpha^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=&
+    \beta\left(\alpha^{(1)}\right)\beta\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 0\\
+    %
+    \alpha^2\left(\alpha^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=&
+    \varepsilon\left(\alpha^{(1)}\right)\alpha^2\left((\alpha\beta+\beta\alpha)^{(1)}\right)+\\
+    &+&
+    \alpha\left(\alpha^{(1)}\right)(\alpha\beta+\beta\alpha)\left((\alpha\beta+\beta\alpha)^{(1)}\right)+\\
+    &+& \alpha^2\left(\alpha^{(1)}\right)\beta\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 1\\
+    %
+    (\alpha\beta+\beta\alpha)\left(\alpha^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=&
+    \beta\left(\alpha^{(1)}\right)(\alpha\beta+\beta\alpha)\left((\alpha\beta+\beta\alpha)^{(1)}\right)+\\
+    &+&(\alpha\beta+\beta\alpha)\left(\alpha^{(1)}\right)\beta^2\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 0\\
+    %
+    \beta^2\left(\alpha^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=& \beta^2\left(\alpha^{(1)}\right)\beta^2\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 0\\
+    \end{eqnarray*}
+
+    Значит $\beta^2\left(\alpha^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) = \mu_2 = 0$
+    Тогда разложения выглядит таким образом:\[
+    \beta^2 = \lambda\varepsilon+ (1-\lambda)\beta + \mu_3(\alpha\beta+\alpha\beta)
+    \]
+
+    Рассмотрим значения наших функций от $\varepsilon^{(1)}(\alpha\beta+\beta\alpha)^{(1)}$
+    \begin{eqnarray*}
+    \varepsilon\left(\varepsilon^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=& 
+    \varepsilon\left(\varepsilon^{(1)}\right)\varepsilon\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 0\\
+    %
+    \alpha\left(\varepsilon^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=&
+    \varepsilon\left(\varepsilon^{(1)}\right)\alpha\left((\alpha\beta+\beta\alpha)^{(1)}\right)+\\
+    &+&\alpha\left(\varepsilon^{(1)}\right)\beta\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 0\\
+    %
+    \beta\left(\varepsilon^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=&
+    \beta\left(\varepsilon^{(1)}\right)\beta\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 0\\
+    %
+    \alpha^2\left(\varepsilon^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=&
+    \varepsilon\left(\varepsilon^{(1)}\right)\alpha^2\left((\alpha\beta+\beta\alpha)^{(1)}\right)+\\
+    &+&
+    \alpha\left(\varepsilon^{(1)}\right)(\alpha\beta+\beta\alpha)\left((\alpha\beta+\beta\alpha)^{(1)}\right)+\\
+    &+& \alpha^2\left(\varepsilon^{(1)}\right)\beta\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 0\\
+    %
+    (\alpha\beta+\beta\alpha)\left(\varepsilon^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=&
+    \beta\left(\varepsilon^{(1)}\right)(\alpha\beta+\beta\alpha)\left((\alpha\beta+\beta\alpha)^{(1)}\right)+\\
+    &+&(\alpha\beta+\beta\alpha)\left(\varepsilon^{(1)}\right)\beta^2\left((\alpha\beta+\beta\alpha)^{(1)}\right) = 0\\
+    %
+    \beta^2\left(\varepsilon^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) &=& \beta^2\left(\varepsilon^{(1)}\right)\beta^2\left((\alpha\beta+\beta\alpha)^{(1)}\right) = \lambda\mu_3\\
+    \end{eqnarray*}
+
+    Значит $\beta^2\left(\varepsilon^{(1)}(\alpha\beta+\beta\alpha)^{(1)}\right) = \lambda\mu_3 = 0$.
+
+    Пусть $\mu_3 \neq 0$, тогда $\lambda = 0$ и $\beta^2 = \beta + \mu_3(\alpha\beta+\beta\alpha)$.
+    Домножим на $\beta$ слева и справа и с учётом (\ref{3}) сложим 
+    \begin{eqnarray*}
+        \beta^3 &=& \beta^2 + \mu_3 \beta(\alpha\beta+\beta\alpha)\\
+        \beta^3 &=& \beta^2 + \mu_3 (\alpha\beta+\beta\alpha)\beta\\
+        2\beta^3 &=& 2\beta^2 + \mu_3 \beta\alpha\beta\\
+    \end{eqnarray*}
+    Домножив последнее равенство на обратный к $\beta$ с обеих сторон и получим
+    \[
+    2\beta = 2\varepsilon+\mu_2\alpha
+    \]
+    Так как $\varepsilon,\ \alpha,\ \beta$ линейно независимы значит $\mu_3 = 0$. Получаем противоречие с нашим предположением $\mu_3 \neq 0$. Значит $\mu_3 = 0$.
+
+    Тогда $\beta^2 =\lambda\varepsilon + (1-\lambda)\beta$.
+    
+    Из группоподобности $\varepsilon,\ \beta$ и $\beta^2$ получаем 
+    \[
+    \varepsilon(\varepsilon^{(1)}\beta^{(1)}) = 0,\ \beta(\varepsilon^{(1)}\beta^{(1)}) = 0,\ \beta^2(\varepsilon^{(1)}\beta^{(1)}) = \lambda(1-\lambda)
+    \]
+    Используя эти результаты, подставим в разложение функции $\beta^2$  $\varepsilon^{(1)}\beta^{(1)}$, где $\varepsilon^{(1)}$ и $\beta^{(1)}$ "--- это единицы соответствующих линейных функций. Получим 
+    \[\lambda(1-\lambda) = \lambda*0 + (1-\lambda)*0 = 0\]
+
+    Если $\lambda = 0$, значит $\beta^2 = \beta$. Домножим это равенство на обратный к $\beta$ и получим $\beta = \varepsilon$, что противоречит линейной независимости $\varepsilon$ и $\beta$.
+
+    Если $\lambda = 1$, тогда $\beta^2 = \varepsilon$.
+    Рассмотрим (\ref{3})
+    \[
+    \beta^2\alpha+ \beta\alpha\beta+\alpha\beta^2 = 2\alpha + \beta\alpha\beta = 0 \eqno(*)
+    \]
+    Домножим на $\alpha$ с обеих сторон 
+    \[
+    2\beta\alpha\beta + \beta^2\alpha\beta^2 = 2\beta\alpha\beta + \alpha = 0
+    \]
+    Выразим из $(*)$ $\beta\alpha\beta$ через $\alpha$ и подставим в соотношение выше, получим
+    \[
+    -4\alpha+\alpha = -3\alpha = 0
+    \]
+    Так как $\mathrm{char}\ \mathbb{K}\neq 3$, получаем $\alpha = 0$, что невозможно ввиду линейной независимости $\varepsilon,\ \alpha,\ \beta,\ \alpha^2,\ \alpha\beta+\beta\alpha$.
+\end{prof}
+
+\end{document}
