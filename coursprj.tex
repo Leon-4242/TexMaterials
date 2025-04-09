@@ -1,0 +1,583 @@
+\documentclass[12pt, reqno, a4paper, oneside]{amsart}
+
+\usepackage{color}
+\definecolor{darkblue}{rgb}{0,0,0.75}
+\definecolor{darkgreen}{rgb}{0,0.75,0}
+\usepackage[%pagebackref,
+colorlinks, linkcolor=darkblue,
+citecolor=darkgreen, urlcolor=blue, bookmarks=false, breaklinks]{hyperref}
+% цветные гиперссылки с драйвером по умолчанию
+
+\usepackage{cmap} % to make Russian text in PDF selectable and searchable
+
+\usepackage[cp1251]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english,russian]{babel}
+
+\usepackage{indentfirst}
+\usepackage[left=2.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+\setlength\parindent{5ex}
+
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\chead{\thepage}
+	\renewcommand{\headrulewidth}{0pt}}
+\linespread{1.25}
+
+\usepackage[ddmmyyyy]{datetime}
+
+\usepackage{titlesec}
+\titleformat{\section}[block]{\bfseries\large\centering}{\thesection}{1ex}{}
+\titleformat{\subsection}[block]{\bfseries\normalsize\centering}{\thesubsection}{1ex}{}
+\setcounter{tocdepth}{1}
+
+\usepackage{amssymb, amsmath, amsthm, longtable, bbm}
+\usepackage[matrix, arrow, curve]{xy}
+
+%\usepackage{ulem} % зачёркиваем исправления
+
+\usepackage[geometry]{ifsym}
+%\newcommand{\sqbullet}{\text{\FilledSmallSquare}}
+\renewcommand{\square}{\text{\SmallSquare}}
+
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+\righthyphenmin=2
+\sloppy
+
+\newtheoremstyle{mytheoremstyle} % name
+{\topsep}                    % Space above
+{\topsep}                    % Space below
+{\itshape}                   % Body font
+{5ex}                           % Indent amount
+{\bfseries}                   % Theorem head font
+{.}                          % Punctuation after theorem head
+{.5em}                       % Space after theorem head
+{}  % Theorem head spec (can be left empty, meaning ‘normal’)
+
+
+\newtheoremstyle{myremarkstyle} % name
+{\topsep}                    % Space above
+{\topsep}                    % Space below
+{}                   % Body font
+{5ex}                           % Indent amount
+{\bfseries}                   % Theorem head font
+{.}                          % Punctuation after theorem head
+{.5em}                       % Space after theorem head
+{}  % Theorem head spec (can be left empty, meaning ‘normal’)
+
+\theoremstyle{mytheoremstyle}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{proposition}[theorem]{Предложение}
+\newtheorem{corollary}[theorem]{Следствие}
+\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem*{conjecture}{Гипотеза}
+
+\theoremstyle{myremarkstyle}
+\newtheorem{remark}[theorem]{Замечание}
+\newtheorem{agreement}[theorem]{Соглашение}
+\newtheorem{example}[theorem]{Пример}
+\newtheorem*{examples}{Примеры}
+\newtheorem*{questions}{Вопросы}
+\newtheorem*{question}{Вопрос}
+\newtheorem{definition}[theorem]{Определение}
+\newtheorem{problem}[theorem]{Задача}
+
+\numberwithin{equation}{section}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par\indent {\bfseries #1\@addpunct{.} }}{\qed}
+\makeatother
+
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\Der}{Der}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\chr}{char}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\UT}{UT}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\diff}{diff}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\cosupp}{cosupp}
+\DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\PSL}{PSL}
+\DeclareMathOperator{\height}{ht}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\length}{length}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Alt}{Alt}
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\op}{op}
+\DeclareMathOperator{\PIexp}{PIexp}
+\newcommand{\hatotimes}{\mathbin{\widehat{\otimes}}}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Coker}{Coker}
+\renewcommand{\Im}{\mathop\mathrm{Im}}
+\DeclareMathOperator{\Coim}{Coim}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Tor}{Tor}
+
+
+
+%%%%%%%%%%%%%%% Fancy symbol \No %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareRobustCommand{\No}{\ifmmode{\nfss@text{\textnumero}}\else\textnumero\fi} 
+
+
+%%%%%%%%%%%%%%% Pullbacks van Tim van der Linden %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newbox\skewpullbackbox
+\setbox\skewpullbackbox=\hbox{\xy 0;<1mm,0mm>: \POS(4,0)\ar@{-} (-4,0) \ar@{-} (8,4)
+	\endxy}
+\newcommand{\skewpullback}{\copy\skewpullbackbox}
+
+\newbox\skwepullbackbox
+\setbox\skwepullbackbox=\hbox{\xy 0;<1mm,0mm>: \POS(16,0)\ar@{-} (10,0) \ar@{-} (12,4)
+	\endxy}
+\newcommand{\skwepullback}{\copy\skwepullbackbox}
+
+\newbox\ksewpullbackbox
+\setbox\ksewpullbackbox=\hbox{\xy 0;<1mm,0mm>: \POS(0,-8)\ar@{-} (0,-4) \ar@{-} (4,-4)
+	\endxy}
+\newcommand{\ksewpullback}{\copy\ksewpullbackbox}
+
+\newbox\pullbackbox
+\setbox\pullbackbox=\hbox{\xy 0;<1mm,0mm>: \POS(4,0)\ar@{-} (0,0) \ar@{-} (4,4)
+	\endxy}
+\newcommand{\pullback}{\copy\pullbackbox}
+
+\newbox\pullbackabox
+\setbox\pullbackabox=\hbox{\xy 0;<1mm,0mm>: \POS(-4,-6)\ar@{-} (-8,-6) \ar@{-} (-4,-2)
+	\endxy}
+\newcommand{\pullbacka}{\copy\pullbackabox}
+
+\newbox\pullbackbbox
+\setbox\pullbackbbox=\hbox{\xy 0;<1mm,0mm>: \POS(-4,-4)\ar@{-} (-8,-4) \ar@{-} (-4,0)
+	\endxy}
+\newcommand{\pullbackb}{\copy\pullbackbbox}
+
+\newbox\pullbackcbox
+\setbox\pullbackcbox=\hbox{\xy 0;<1mm,0mm>: \POS(4,-7)\ar@{-} (0,-7) \ar@{-} (4,-3)
+	\endxy}
+\newcommand{\pullbackc}{\copy\pullbackcbox}
+
+
+\newbox\pullbackdbox
+\setbox\pullbackdbox=\hbox{\xy 0;<1mm,0mm>:\POS(-10,-6)\ar@{-} (-14,-6) \ar@{-} (-10,-2)
+	\endxy}
+\newcommand{\pullbackd}{\copy\pullbackdbox}
+
+
+\newbox\pushoutbox
+\setbox\pushoutbox=\hbox{\xy 0;<1mm,0mm>: \POS(0,4)\ar@{-} (0,0) \ar@{-} (4,4)
+	\endxy}
+\newcommand{\pushout}{\copy\pushoutbox}
+
+\newbox\pushoutabox
+\setbox\pushoutabox=\hbox{\xy 0;<1mm,0mm>: \POS(2,8)\ar@{-} (2,4) \ar@{-} (8,8)
+	\endxy}
+\newcommand{\pushouta}{\copy\pushoutabox}
+
+
+\begin{document}
+
+{\fontsize{14pt}{18} \selectfont
+	
+	\thispagestyle{empty}
+	\begin{center}
+		
+		\vfill\vfill \ \\ {%\Large
+			МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ \\
+			имени М.В.~ЛОМОНОСОВА
+			
+			\medskip
+			
+			МЕХАНИКО-МАТЕМАТИЧЕСКИЙ ФАКУЛЬТЕТ
+			
+			\medskip
+			
+			
+			КАФЕДРА ВЫСШЕЙ АЛГЕБРЫ
+			
+		}
+		
+	
+
+{%\Large
+	\vfill {%\Large
+		
+		КУРСОВАЯ РАБОТА
+		
+	}
+		
+		
+		\vfill{\Large
+			\textbf{О НЕКОТОРЫХ СВОЙСТВАХ ПОДМНОЖЕСТВ ПУСТЫХ МНОЖЕСТВ, НЕ ИЗВЕСТНЫХ РАНЕЕ} 
+		}
+		
+			
+
+			\vfill
+			\begin{flushright}
+				\begin{tabular}{r}
+					Выполнила:\\
+студентка 302 группы \\
+Комерист Евгения Николаевна
+					\\
+					\\
+					Научный руководитель: \\
+					доктор физико-математических наук, \\
+					профессор Гордиенко Алексей Сергеевич
+				\end{tabular}
+			\end{flushright}
+			
+		}
+		
+		\vfill\vfill\vfill\vfill 
+		
+		Москва
+		
+		 2025
+	\end{center}
+}
+
+\newpage
+
+	
+\pagestyle{plain}
+
+\section{Введение}\label{SectionPrelim}
+
+Во многих областях математики и физики (см., например, \cite{ArnoldBook, ModernGeometry, MurphyBook, HaagKastler}) находят своё применение \textit{алгебры}, то есть векторные пространства над некоторым полем $\mathbbm{k}$ (например, $\mathbbm{k}$ может быть полем $\mathbb{R}$ вещественных или $\mathbb{C}$ комплексных чисел), в которых задана бинарная операция внутреннего умноже­ния, линейная по каждому аргументу. 
+
+Часто алгебры, встречающиеся в приложениях, наделены некоторой дополнительной структурой или (обобщёнными) симметриями: действием (полу)группы эндоморфизмами и антиэндоморфизмами, (полу)групповой градуировкой или действием алгеб­ры Ли дифференцированиями (см., например, \cite{PolyakovBook, HaagBook, KakuBook, MajidBook}). Для работы с такими дополнительными структурами оказывается полезным понятие модульной и комодульной алгебры над алгеброй Хопфа и даже более общее понятие алгебры с обобщённым $H$-действием. В частности, понятие (ко)модульной алгебры позволяет изучать различные виды дополнительных структур на алгебрах одновременно.
+
+Кроме того, (ко)модульные алгебры естественным образом возникают в геометрии: если некоторая аффинная алгебраическая группа действует морфизмами на аффинном алгебраи­ческом многообразии (например, рассматриваются симметрии некоторой поверхности, задан­ной алгебраическими уравнениями), то алгебра регулярных функций (множество функций, которые можно определить при помощи многочленов от координат точки,
+с операциями сложения, умножения между собой и на скаляры) будет модульной алгеброй над групповой алгеброй этой группы и над универсальной обёртывающей алгебры Ли этой группы и комодульной алгеброй над алгеброй регулярных функций на аффинной алгебраической группе~\cite{Abe}.
+
+Обратим внимание на то, что в классическом случае алгебры регулярных функций на многообразиях коммутативны, так как для умножения функций выполнен перестановочный закон. Однако в новом направлении, которое получило название некоммутативной геометрии, рассмат­риваются <<некоммутативные пространства>>, т. е. такие пространства, алгебры регулярных функций которых некоммутативны. Поэтому изучение (ко)действий необязательно коммутатив­ных алгебр Хопфа на необязательно коммутативных алгебрах можно интерпретировать как изучение кван­товых симметрий некоммутативных пространств. Последние находят своё применение в теорети­ческой физике (см., например, \cite{ConnesMarcolli, Donatsos}).
+
+\section{Основные понятия}\label{SectionIntro}
+
+В данном параграфе мы напомним основные понятия, связанные с (ко)алгебрами, алгебрами Ли, биалгебрами и алгебрами Хопфа.
+Подробнее с этими понятиями можно познакомиться в монографиях~\cite{HumphreysLieAlg, Danara, Montgomery, Sweedler}.
+
+Прежде всего напомним понятие алгебры над полем в удобной для нас форме, а именно, на языке линейных отображений и коммутативных диаграмм. 
+
+\begin{definition} 
+	\textit{Алгеброй над полем $\mathbbm{k}$} называется пара $(A, \mu)$, состоящая из
+	векторного пространства $A$ над $\mathbbm{k}$ и линейного отображения
+	$\mu \colon A \otimes A \to A$.
+\end{definition}
+
+При помощи отображения $\mu$ на векторном пространстве $A$ задаётся операция внутреннего умножения, линейная по каждому аргументу:
+$ab := \mu(a\otimes b)$ для всех $a,b\in A$.
+
+Алгебра $(A, \mu)$ называется \textit{ассоциативной}, если
+следующая диаграмма коммутативна: $$\xymatrix{ A \otimes A \otimes A \ar[d]_{\mu \otimes \id_A} \ar[rr]^{\id_A \otimes \mu} && A\otimes A
+	\ar[d]_\mu \\
+	A\otimes A \ar[rr]^\mu && A  } $$
+
+\section{(Ко)носители коизмерений}
+
+Прежде всего, нам понадобится следующая лемма:
+
+\begin{lemma}[{\cite[лемма 2.14]{ASGordienko21ALAgoreJVercruysse}}]\label{LemmaLinearMap(Co)modClosure}
+	Пусть $A,B,P$~"--- векторные пространства над полем $\mathbbm{k}$.
+	Пусть $\rho \colon A \to B \otimes P^*$~"--- линейное отображение, $\rho(a)=a_{(0)}\otimes a_{(1)}$
+	при $a\in A$. Определим линейное отображение $\rho^\vee \colon P \otimes A \to B$ по формуле $\psi(p\otimes a):=a_{(1)}(p)a_{(0)}$
+	для всех $a\in A$, $p\in P$.
+	Тогда $\cosupp \rho = \overline{\vphantom{|}\cosupp\rho^\vee}$ (замыкание берётся в конечной топологии).
+\end{lemma}
+
+Теперь докажем следующую лемму:
+
+\begin{lemma}\label{LemmaMeasComeasBijection}
+	Пусть $A$ и $B$~"--- $\Omega$-алгебры над полем $\mathbbm{k}$, $P$~"--- коалгебра, а $V \subseteq \mathbf{Vect}_\mathbbm{k}(A,B)$~"---
+	поточечно конечномерное подпространство, замкнутое в конечной
+	топологии.
+	Обозначим через $\mathrm{Meas}(P,A,B,V)$
+	множество всех измерений $\psi \colon P \otimes A \to B$, для которых $\cosupp \psi \subseteq V$,
+	а через $\mathrm{Comeas}(P^*,A,B,V)$
+	множество всех коизмерений $\rho \colon A \to B \otimes P^*$,  для которых $\cosupp \rho \subseteq V$.
+	Тогда существует биекция $\mathrm{Meas}(P,A,B,V) 
+	\cong \mathrm{Comeas}(P^*,A,B,V)$,
+	естественная по коалгебре $P$, если рассматривать $\mathrm{Meas}(-,A,B,V)$ и $\mathrm{Comeas}((-)^*,A,B,V)$
+	как функторы $\mathbf{Coalg}_\mathbbm{k} \to \mathbf{Sets}$.
+\end{lemma}
+\begin{proof} Любое коизмерение $\rho \in \mathrm{Comeas}(P^*,A,B,V)$ порождает измерение $\rho^\vee \colon P \otimes A \to B$, где $\rho^\vee(p\otimes a):=a_{(1)}(p)a_{(0)}$ для всех $a\in A$ и $p\in P$.
+	Тогда $\cosupp \rho^\vee \subseteq \cosupp \rho \subseteq V$ и $\rho^\vee \in \mathrm{Meas}(P,A,B,V)$.
+	
+	Обратно, если $\psi \in \mathrm{Meas}(P,A,B,V)$, то $\cosupp \psi \subseteq V$,
+	т.е. $\cosupp \psi$ является поточечно конечномерным пространством.
+	Отсюда для каждого $a \in A$ существует конечное число элементов
+	$b_1, \ldots, b_n \in B$ и линейных функций $p_1^*, \ldots, p_n^* \in P^*$ таких, что
+	для любого $p\in P$ справедливо равенство $\psi(p\otimes a)=\sum_{i=1}^n p_i^*(p)b_i$,
+	причём при фиксированных линейно независимых элементах $b_1, \ldots, b_n$ элементы $p_1^*, \ldots, p_n^* \in P^*$ определены однозначно. Поэтому существует единственное коизмерение $\rho \colon A \to B \otimes P^*$ такое, что $\psi = \rho^\vee$. Для любого $a\in A$ справедливо равенство $\rho(a)=\sum_{i=1}^n b_i \otimes p_i^*$. 
+	Поскольку $V$ замкнуто, в силу леммы~\ref{LemmaLinearMap(Co)modClosure}
+	справедливо включение $\cosupp \rho = \overline{\cosupp \psi} \subseteq V$, и $\rho \in \mathrm{Comeas}(P^*,A,B,V)$.	
+\end{proof}
+
+Основным результатом курсовой работы является теорема ниже:
+
+\begin{theorem}\label{TheoremsquareBBialgebra}
+	Пусть $A$~"--- это $\Omega$-алгебра над полем $\mathbbm{k}$, а $V\subseteq \End_\mathbbm{k}(A)$~"--- подалгебра, содержащая тождественный оператор.
+	Тогда на $V$-универсальной измеряющей коалгебре ${}_\square \mathcal{B}(A,V) := {}_\square \mathcal{C}(A,A,V)$ 
+	можно задать структуру биалгебры (см. \S\ref{SectionIntro}) таким образом, что
+	для любой биалгебры $B$ и любого действия
+	$\psi \colon B \otimes A \to A$ такого, что $\cosupp \psi \subseteq V$, единственный гомоморфизм коалгебр
+	$\varphi$ такой, что диаграмма ниже является коммутативной,
+	является ещё и гомоморфизмом биалгебр:
+	\begin{equation}\label{EqTheoremsquareBBialgebra}\xymatrix{ B \otimes A \ar[r]^(0.6){\psi} \ar@{-->}[d]_{\varphi \otimes \id_A} & A \\
+		{}_\square \mathcal{B}(A,V) \otimes A  \ar[ru]_{\psi_{A,V}}  } \end{equation}
+	(Здесь $\psi_{A,V} := \psi_{A,A,V}$.)
+\end{theorem}
+
+Основываясь на теореме~\ref{TheoremsquareBBialgebra}, будем называть биалгебру ${}_\square \mathcal{B}(A,V)$  \textit{$V$-универсальной действующей биалгеброй}.\label{NotationsquareBAV}
+
+\begin{proof}[Доказательство теоремы~\ref{TheoremsquareBBialgebra}]
+	Заметим, что $$\psi_{A,V}(\id_{{}_\square \mathcal{B}(A,V)} \otimes \psi_{A,V})
+	\colon {}_\square \mathcal{B}(A,V)\otimes {}_\square \mathcal{B}(A,V) \otimes A \to A$$
+	также является измерением, причём $\cosupp(\psi_{A,V}(\id_{{}_\square \mathcal{B}(A,V)} \otimes \psi_{A,V}))
+	\subseteq V$, поскольку $V$~"--- подалгебра.
+	Отсюда существует единственный гомоморфизм коалгебр $\mu \colon 
+	{}_\square \mathcal{B}(A,V)\otimes {}_\square \mathcal{B}(A,V) \to {}_\square \mathcal{B}(A,V)$
+	такой, что следующая диаграмма коммутативна:
+	$$\xymatrix{ {}_\square \mathcal{B}(A,V)\otimes {}_\square \mathcal{B}(A,V) \otimes A \ar[rrr]^(0.6){\id_{{}_\square \mathcal{B}(A,V)} \otimes \psi_{A,V}} \ar@{-->}[d]_{\mu \otimes \id_A} && & {}_\square \mathcal{B}(A,V) \otimes A  \ar[d]^{\psi_{A,V}} \\
+		{}_\square \mathcal{B}(A,V) \otimes A  \ar[rrr]_{\psi_{A,V}} &&  & A  } $$
+	Определим теперь умножение в ${}_\square \mathcal{B}(A,V)$ при помощи отображения  $\mu$.
+	
+	Для того, чтобы задать единичный элемент, рассмотрим тривиальное отображение $$\mathbbm{k} \otimes A
+	\mathrel{\widetilde\to}  A.$$
+	В силу того, что это отображение является измерением,
+	существует единственный гомоморфизм коалгебр $u \colon \mathbbm{k} \to {}_\square \mathcal{B}(A,V)$
+	такой, что коммутативна диаграмма
+	$$\xymatrix{ \mathbbm{k} \otimes A \ar[r]^(0.6){\sim} \ar@{-->}[d]_{u \otimes \id_A} & A \\
+		{}_\square \mathcal{B}(A,V) \otimes A  \ar[ru]_{\psi_{A,V}}  } $$
+	Определим $1_{{}_\square \mathcal{B}(A,V)} := u(1_\mathbbm{k})$.
+	
+	Теперь нужно доказать, что умножение $\mu$
+	ассоциативно и $1_{{}_\square \mathcal{B}(A,V)}$ действительно является
+	единицей алгебры ${}_\square \mathcal{B}(A,V)$.
+	
+	Рассмотрим диаграмму
+	
+	{\scriptsize
+		$$\hspace{-1cm}\xymatrix{  {}_\square \mathcal{B}(A,V)\otimes {}_\square \mathcal{B}(A,V) \otimes {}_\square\mathcal{B}(A,V) \otimes A 
+			\ar[rr]^{ \id_{{}_\square \mathcal{B}(A,V)} \otimes \mu\otimes \id_A} \ar[dd]^(0.7){\id_{{}_\square \mathcal{B}(A,V)} \otimes\id_{{}_\square \mathcal{B}(A,V)} \otimes\psi_{A,V}} \ar[rd]^(0.6){\qquad\mu\otimes \id_{{}_\square \mathcal{B}(A,V)} \otimes \id_A} &&  {}_\square \mathcal{B}(A,V) \otimes {}_\square\mathcal{B}(A,V) \otimes A \ar'[d][dd]^{\id_{{}_\square \mathcal{B}(A,V)} \otimes\psi_{A,V}} \ar[rd]^{\mu\otimes \id_A} & \\
+			& {}_\square \mathcal{B}(A,V) \otimes {}_\square\mathcal{B}(A,V) \otimes A \ar[rr]^(0.4){\mu\otimes \id_A} \ar[dd]^(0.7){\id_{{}_\square \mathcal{B}(A,V)} \otimes\psi_{A,V}}
+			&& {}_\square\mathcal{B}(A,V) \otimes A \ar[dd]^{\psi_{A,V}} \\
+			{}_\square \mathcal{B}(A,V) \otimes {}_\square\mathcal{B}(A,V) \otimes A \ar'[r][rr]^(0.4){\id_{{}_\square \mathcal{B}(A,V)} \otimes\psi_{A,V}} \ar[rd]^{\mu\otimes \id_A} && {}_\square\mathcal{B}(A,V) \otimes A \ar[rd]^{\psi_{A,V}} & \\
+			& {}_\square\mathcal{B}(A,V) \otimes A \ar[rr]_{\psi_{A,V}} && A } $$ }
+	
+	Левая грань коммутативна, поскольку обе композиции равны 
+	$\mu \otimes \psi_{A,V}$.
+	Коммутативность остальных граней, за исключением верхней, следует из
+	определения отображения $\mu$.
+	Отсюда композиции, отвечающие верхней грани, также становятся равными друг другу
+	после их композиции с $\psi_{A,V}$.
+	Теперь из универсального свойства коалгебры ${}_\square \mathcal{B}(A,V)$
+	следует коммутативность диаграммы
+	$$\xymatrix{ {}_\square \mathcal{B}(A,V)\otimes {}_\square \mathcal{B}(A,V) \otimes {}_\square\mathcal{B}(A,V) \ar[rrr]^(0.6){\id_{{}_\square \mathcal{B}(A,V)} \otimes \mu} \ar[d]_{\mu \otimes \id_{{}_\square \mathcal{B}(A,V)}} && & {}_\square \mathcal{B}(A,V) \otimes {}_\square\mathcal{B}(A,V)  \ar[d]^{\mu} \\
+		{}_\square \mathcal{B}(A,V) \otimes {}_\square \mathcal{B}(A,V)  \ar[rrr]_{\mu} &&  & {}_\square\mathcal{B}(A,V)  },$$
+	откуда умножение в ${}_\square \mathcal{B}(A,V)$ действительно ассоциативно.
+	
+	Рассмотрим диаграмму
+	
+	$$\xymatrix{ \mathbbm{k} \otimes {}_\square \mathcal{B}(A,V)\otimes A \ar[rr]^{u \otimes \id_{{}_\square \mathcal{B}(A,V)}\otimes\id_A} \ar[rd]^{\sim} \ar[dd]_(0.7){\id_\mathbbm{k}  \otimes\psi_{A,V}}
+		& & {}_\square \mathcal{B}(A,V)\otimes {}_\square \mathcal{B}(A,V)\otimes A  \ar[dd]^{\id_{{}_\square \mathcal{B}(A,V)} \otimes \psi_{A,V}}  \ar[ld]^{\mu\otimes\id_A}\\
+		& {}_\square \mathcal{B}(A,V)\otimes A \ar[dd]^(0.3){\psi_{A,V}} & \\
+		\mathbbm{k} \otimes A \ar'[r][rr]^(0.3){u\otimes\id_A} \ar[rd]^{\sim}
+		& & {}_\square \mathcal{B}(A,V)\otimes  A  \ar[ld]^{\psi_{A,V}}\\
+		&  A  & 
+	} $$
+	
+	Коммутативность задней и левой граней очевидна.
+	Коммутативность нижней грани следует из определения отображения $u$, а коммутативность правой грани следует из определения отображения $\mu$.
+	Следовательно, гомоморфизмы коалгебр, образующие верхнюю грань, становятся равными после их композиции с
+	$\psi_{A,V}$. 
+	Применяя универсальное свойство коалгебры ${}_\square \mathcal{B}(A,V)$,
+	получаем отсюда
+	коммутативность диаграммы
+	$$\xymatrix{ \mathbbm{k} \otimes {}_\square \mathcal{B}(A,V) \ar[rr]^{u \otimes \id_{{}_\square \mathcal{B}(A,V)}} \ar[rd]^{\sim} 
+		& & {}_\square \mathcal{B}(A,V)\otimes {}_\square \mathcal{B}(A,V) \ar[ld]^{\mu}\\
+		& {}_\square \mathcal{B}(A,V)  & }$$
+	Отсюда элемент $1_{{}_\square \mathcal{B}(A,V)}$ является левой единицей алгебры ${}_\square \mathcal{B}(A,V)$.
+	
+	Коммутативность диаграммы
+	$$\xymatrix{  {}_\square \mathcal{B}(A,V) \otimes \mathbbm{k} \ar[rr]^{\id_{{}_\square \mathcal{B}(A,V)} \otimes u} \ar[rd]^{\sim} 
+		& & {}_\square \mathcal{B}(A,V)\otimes {}_\square \mathcal{B}(A,V) \ar[ld]^{\mu}\\
+		& {}_\square \mathcal{B}(A,V)  & }$$
+	получается при помощи аналогичных рассуждений, применённых к диаграмме
+	$$\xymatrix{  {}_\square \mathcal{B}(A,V)\otimes \mathbbm{k} \otimes A \ar[rr]^{ \id_{{}_\square \mathcal{B}(A,V)}\otimes u \otimes\id_A} \ar[rd]^{\sim} \ar[dd]^{\sim}
+		& & {}_\square \mathcal{B}(A,V)\otimes {}_\square \mathcal{B}(A,V)\otimes A  \ar[dd]^{\id_{{}_\square \mathcal{B}(A,V)} \otimes \psi_{A,V}}  \ar[ld]^{\mu\otimes\id_A}\\
+		& {}_\square \mathcal{B}(A,V)\otimes A \ar[dd]^(0.3){\psi_{A,V}} & \\
+		{}_\square \mathcal{B}(A,V) \otimes A \ar@{=}'[r][rr] \ar[rd]_{\psi_{A,V}}
+		& & {}_\square \mathcal{B}(A,V)\otimes  A  \ar[ld]^{\psi_{A,V}}\\
+		&  A  & 
+	} $$
+	
+	Следовательно, $1_{{}_\square \mathcal{B}(A,V)}$ является не только левой, но и правой единицей
+	алгебры ${}_\square \mathcal{B}(A,V)$, и ${}_\square \mathcal{B}(A,V)$~"--- действительно биалгебра.
+	
+	Предположим, что $B$~"--- биалгебра, а $\psi \colon B \otimes A \to A$~"--- такое
+	действие, что $\cosupp \psi \subseteq V$.
+	Обозначим через $\varphi \colon B \to {}_\square \mathcal{B}(A,V)$ 
+	единственный гомоморфизм коалгебр, делающий диаграмму~\eqref{EqTheoremsquareBBialgebra}
+	коммутативной. Такой гомоморфизм существует в силу теоремы~\cite[теорема 3.10]{ASGordienko21ALAgoreJVercruysse}. Докажем, что в этом случае $\varphi$ является гомоморфизмом биалгебр.
+	
+	Рассмотрим диаграмму
+	$$\xymatrix{  B \otimes B \otimes A 
+		\ar[rr]^(0.4){\varphi\otimes\varphi\otimes\id_A} \ar[dd]_{\id_B \otimes \psi}  \ar[rd]^{\mu_B\otimes\id_A} &&  {}_\square \mathcal{B}(A,V) \otimes {}_\square\mathcal{B}(A,V) \otimes A \ar'[d][dd]^{\id_{{}_\square \mathcal{B}(A,V)}\otimes \psi_{A,V}} \ar[rd]^{\mu\otimes\id_A} & \\
+		& B \otimes A \ar[rr]^(0.3){\varphi\otimes\id_A} \ar[dd]^(0.3){\psi} && {}_\square\mathcal{B}(A,V) \otimes A \ar[dd]^{\psi_{A,V}} \\
+		B \otimes A \ar'[r][rr]^(0.3){\varphi\otimes\id_A} \ar[rd]^{\psi} && {}_\square\mathcal{B}(A,V) \otimes A  \ar[rd]^{\psi_{A,V}} \\
+		& A \ar@{=}[rr] && A } $$ 
+	(Здесь $\mu_B \colon B\otimes B \to B$~"--- умножение в $B$.)
+	
+	Нижняя и передняя грани коммутативны по определению гомоморфизма $\varphi$. 
+	Задняя грань коммутативна, так как она совпадает с нижней (и передней) гранью, тензорно умноженной
+	слева на $\varphi$.
+	Левая и правая грани коммутативны, поскольку и $\psi$, и $\psi_{A,V}$ определяют на $A$
+	структуру левого модуля. 
+	Отсюда после композиции с $\psi_{A,V}$
+	верхняя грань также становится коммутативной, и из
+	универсального свойства коалгебры ${}_\square\mathcal{B}(A,V)$
+	следует коммутативность диаграммы
+	$$\xymatrix{ B \otimes B   \ar[r]^(0.3){\varphi\otimes\varphi}\ar[d]_{\mu_B} & {}_\square \mathcal{B}(A,V) \otimes {}_\square\mathcal{B}(A,V)  \ar[d]^{\mu} \\ 
+		B \ar[r]_{\varphi} & {}_\square\mathcal{B}(A,V) }$$ Следовательно, отображение $\varphi$ 
+	сохраняет операцию умножения.
+	
+	Рассмотрим диаграмму $$\xymatrix{ & \mathbbm{k} \otimes A \ar[lddd]_{u_B \otimes \id_A} 
+		\ar[dd]^(0.7){u \otimes \id_A}  \ar[rddd]^{\sim} & \\ & & \\
+		& {}_\square\mathcal{B}(A,V) \otimes A  
+		\ar[rd]_{\psi_{A,V}} & \\
+		B \otimes A \ar[rr]_{\psi} \ar[ru]_{\varphi \otimes \id_A}& & A }$$ (Здесь отображение $u_B \colon \mathbbm{k}  \to B$ задаётся равенством $u(\alpha)=\alpha 1_B$, где $\alpha\in \mathbbm{k}$.)
+	
+	Большой треугольник и правый треугольник коммутативны в силу того, что единицы биалгебр $B$ и ${}_\square\mathcal{B}(A,V)$ действуют на $A$ как тождественный оператор.
+	Нижний треугольник коммутативен по определению отображения $\varphi$.
+	Следовательно, левый треугольник также становится коммутативным после композиции его отображений
+	с отображением $\psi_{A,V}$.
+	Следовательно, из универсального свойства коалгебры
+	${}_\square\mathcal{B}(A,V)$ 
+	следует коммутативность диаграммы
+	$$\xymatrix{  & \mathbbm{k} \ar[ld]_{u_B} \ar[rd]^(0.4){u} & \\
+		B \ar[rr]_(0.4){\varphi} & & {}_\square\mathcal{B}(A,V) }$$
+	Отсюда отображение $\varphi$ сохраняет единицу и поэтому действительно является
+	гомоморфизмом биалгебр.
+\end{proof}
+
+\begin{remark}
+В коуниверсальном квадрате в категории групп, в котором нижняя стрелка $f$~"--- эпиморфизм, верхняя стрелка $g$ также является эпиморфизмом:
+
+$$ \xymatrix{ 
+	A\mathbin{\times_C} B \ar@{->}[r]^(0.6)g \ar[d]  \ar@{}[rd]|<{\pullbacka} & B  \ar[d] \\
+	A  \ar@{->>}[r]^f &  C   \\       
+}
+$$
+\end{remark}
+
+Такая диаграмма нам кажется особенно важной:
+
+$$\xymatrix{  A \ar@{->>}[ddd]_{f} \ar@{->>}[rd]_{\eta^1_{f}} \ar@{->>}[rrr]_{r} \ar@{}[rd]|<{\skwepullback} &&& P \ar@{->>}[rd]^{\eta^1_h} \ar@{->>}'[ld][lllddd]^(0.2){h} & \\
+	& A_1 \ar@{->>}[rrr]_{r_1} \ar@{->>}[ldd]_(0.3){I_1(f)} &&& P_1 \ar@{->>}[lllldd]^{I_1(h)}\\
+	&&&\\
+	B &&}
+$$
+
+
+\begin{thebibliography}{99}
+	
+\normalsize
+
+
+\bibitem{ArnoldBook} Арнольд В.\,И. Математические методы классической механики. М.: Эдиториал УРСС, 2003, 416~с.
+
+\bibitem{BahturinZaicevSegal} Бахтурин Ю.\,А., Зайцев М.\,В., Сегал С.\,К.
+Конечномерные простые градуированные алгебры. \textit{Матем. сб.}, \textbf{199}:7 (2008), 21--40.
+
+
+\bibitem{ModernGeometry} Дубровин~Б.\,А., Новиков~С.\,П., Фоменко~А.\,Т. Современная геометрия: в 3 т.
+М.: Эдиториал УРСС, 2000.
+
+
+\bibitem{MurphyBook} Мёрфи~Дж. $C^*$-алгебры и теория операторов. М.:~Факториал, 1997, 336~с.
+
+
+\bibitem{PolyakovBook} Поляков~А.\,М. Калибровочные поля и струны. Ижевск: Издательский дом <<Удмуртский университет>>, 1999, 312~с.
+
+
+\bibitem{HumphreysLieAlg}  Хамфриc Дж. Введение в теорию алгебр Ли и их представлений. М.: МЦНМО, 2003, 216 с. 
+
+\bibitem{Herstein} Херстейн~И. Некоммутативные кольца.
+М.: Мир, 1972, 192~с.
+
+\bibitem{Abe} Abe, E. Hopf algebras. Cambridge University Press, Cambridge, 1980.
+
+\bibitem{ASGordienko21ALAgoreJVercruysse}
+Agore, A.\,L., Gordienko, A.\,S., Vercruysse, J.
+$V$-universal Hopf algebras (co)acting on $\Omega$-algebras. \textit{Commun. Contemp. Math.},
+\textbf{25}:1 (2023), 2150095-1 -- 2150095-40. 
+
+\bibitem{ASGordienko24ALAgoreJVercruysse}
+Agore, A.\,L., Gordienko, A.\,S., Vercruysse, J.
+Lifting of locally initial objects and universal (co)acting Hopf algebras.
+\texttt{arXiv:2406.17677 [math.CT] 25 Jun 2024}.
+
+
+\bibitem{ConnesMarcolli} Connes, A., Marcolli, M. Quantum fields, noncommutative spaces and motives. (Книга готовится к печати, электронная версия \url{https://www.alainconnes.org/docs/bookwebfinal.pdf})
+
+
+\bibitem{Danara} D\u asc\u alescu, S., N\u ast\u asescu, C., Raianu, \c S.
+Hopf algebras: an introduction. New York, Marcel Dekker, Inc., 2001.
+
+
+\bibitem{Donatsos} Donatsos, D., Daskaloyannis, C. Quantum groups and their applications in nuclear physics. \textit{Progress in Particle and Nuclear Physics},  \textbf{43} (1999), 537--618.
+
+
+     \bibitem{ZaiGia} Giambruno, A., Zaicev, M.\,V.
+Polynomial identities and asymptotic methods.
+\textit{AMS Mathematical Surveys and Monographs.} \textbf{122},
+Providence, R.I., 2005, 352~pp.
+
+
+\bibitem{ASGordienko23}
+Gordienko, A.\,S.
+On a general notion of a polynomial identity and codimensions.
+\textit{J. Pure and Appl. Algebra}, \textbf{229}:1 (2025), 107814-1 -- 107814-27.
+%\texttt{arXiv:2404.15868 [math.RA] 24 Apr 2024}. 
+
+
+\bibitem{HaagBook} Haag, R. Local quantum physics: fields, particles, algebras.
+Springer-Verlag, Berlin, Heidelberg, 1996.
+
+ 
+\bibitem{HaagKastler} Haag, R., Kastler, D. An algebraic approach to quantum field theory.
+\textit{J. Math. Phys.}, \textbf{5} (1964), 848--861.
+
+
+\bibitem{KakuBook} Kaku, M. Introduction to superstrings and M-theory. Springer-Verlag, New York, 1999.
+
+
+\bibitem{MajidBook} Majid, S. Foundations of quantum group theory. Cambridge University Press, 1995.
+
+
+
+\bibitem{Montgomery} Montgomery, S. Hopf algebras and their actions on rings. \textit{CBMS Lecture Notes} \textbf{82}, Amer. Math. Soc., Providence, RI, 1993.
+
+
+\bibitem{Sweedler} Sweedler, M.\,E. Hopf Algebras. W.\,A. Benjamin, New York, 1969.
+
+
+\end{thebibliography}
+	
+
+
+\end{document}
