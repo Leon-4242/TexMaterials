@@ -1,129 +1,273 @@
-\documentclass[a4paper, 12pt]{article}
+\documentclass[12pt, reqno, a4paper, oneside, notitlepage]{amsart}
+
+\usepackage{color}
+\definecolor{darkblue}{rgb}{0,0,0.75}
+\definecolor{darkgreen}{rgb}{0,0.75,0}
+\usepackage[%pagebackref,
+colorlinks, linkcolor=darkblue,
+citecolor=darkgreen, urlcolor=blue, bookmarks=false, breaklinks]{hyperref}
 
 \usepackage{cmap}
-\usepackage[T2A]{fontenc}
-\usepackage[english, russian]{babel}
+
 \usepackage[utf8]{inputenc}
-\usepackage[left=2cm,right=1.5cm,top=2cm,bottom=2cm]{geometry}
-% \usepackage{mathtext}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{etoolbox}
-\usepackage{amsthm}
-\usepackage{booktabs}
-\usepackage{hyperref}
-\usepackage{xcolor}
-% \usepackage{nicematrix}
-\usepackage{graphicx}
-% \usepackage{tikz}
-% \usepackage{parskip}
+\usepackage[T2A]{fontenc}
+\usepackage[english,russian]{babel}
 
-% Цвета для гиперссылок
-\definecolor{linkcolor}{HTML}{225ae2} % цвет ссылок
-\definecolor{urlcolor}{HTML}{225ae2} % цвет гиперссылок
-\hypersetup{
-    pdfstartview=FitH, 
-    linkcolor=linkcolor,
-    urlcolor=urlcolor,
-    colorlinks=true
-}
+\usepackage{indentfirst}
+\usepackage[left=2.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+\setlength\parindent{5ex}
 
-\addto\captionsenglish{% Replace "english" with the language you use
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\chead{\thepage}
+	\renewcommand{\headrulewidth}{0pt}}
+\linespread{1.25}
+
+\usepackage{tocloft}
+\usepackage[ddmmyyyy]{datetime}
+
+\usepackage{titlesec}
+\titleformat{\section}[block]{\bfseries\large\centering}{\thesection}{1ex}{}
+\titleformat{\subsection}[block]{\bfseries\normalsize\centering}{\thesubsection}{1ex}{}
+
+\usepackage{amssymb, amsmath, amsthm, longtable, bbm}
+\usepackage[matrix, arrow, curve]{xy}
+
+\usepackage[geometry]{ifsym}
+
+\renewcommand{\square}{\text{\SmallSquare}}
+
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+\righthyphenmin=2
+\sloppy
+
+\newtheoremstyle{mytheoremstyle} % name
+{\topsep}                    % Space above
+{\topsep}                    % Space below
+{\itshape}                   % Body font
+{5ex}                           % Indent amount
+{\bfseries}                   % Theorem head font
+{.}                          % Punctuation after theorem head
+{.5em}                       % Space after theorem head
+{}  % Theorem head spec (can be left empty, meaning normal)
+
+\newtheoremstyle{myremarkstyle} % name
+{\topsep}                    % Space above
+{\topsep}                    % Space below
+{}                   % Body font
+{5ex}                           % Indent amount
+{\bfseries}                   % Theorem head font
+{.}                          % Punctuation after theorem head
+{.5em}                       % Space after theorem head
+{}  % Theorem head spec (can be left empty, meaning normal)
+
+\theoremstyle{mytheoremstyle}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{proposition}[theorem]{Предложение}
+\newtheorem{corollary}[theorem]{Следствие}
+\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem*{conjecture}{Гипотеза}
+
+\theoremstyle{myremarkstyle}
+\newtheorem{remark}[theorem]{Замечание}
+\newtheorem{agreement}[theorem]{Соглашение}
+\newtheorem{example}[theorem]{Пример}
+\newtheorem*{examples}{Примеры}
+\newtheorem*{questions}{Вопросы}
+\newtheorem*{question}{Вопрос}
+\newtheorem{definition}[theorem]{Определение}
+\newtheorem{problem}[theorem]{Задача}
+
+\numberwithin{equation}{section}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par\indent {\bfseries #1\@addpunct{.} }}{\qed}
+\makeatother
+
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\Der}{Der}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\chr}{char}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\UT}{UT}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\diff}{diff}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\cosupp}{cosupp}
+\DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\PSL}{PSL}
+\DeclareMathOperator{\height}{ht}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\length}{length}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Alt}{Alt}
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\op}{op}
+\DeclareMathOperator{\PIexp}{PIexp}
+\newcommand{\hatotimes}{\mathbin{\widehat{\otimes}}}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Coker}{Coker}
+\renewcommand{\Im}{\mathop\mathrm{Im}}
+\DeclareMathOperator{\Coim}{Coim}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Tor}{Tor}
+
+%%%%%%%%%%%%%%% Fancy symbol \No %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareRobustCommand{\No}{\ifmmode{\nfss@text{\textnumero}}\else\textnumero\fi} 
+
+
+%%%%%%%%%%%%%%% Pullbacks van Tim van der Linden %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newbox\skewpullbackbox
+\setbox\skewpullbackbox=\hbox{\xy 0;<1mm,0mm>: \POS(4,0)\ar@{-} (-4,0) \ar@{-} (8,4)
+	\endxy}
+\newcommand{\skewpullback}{\copy\skewpullbackbox}
+
+\newbox\skwepullbackbox
+\setbox\skwepullbackbox=\hbox{\xy 0;<1mm,0mm>: \POS(16,0)\ar@{-} (10,0) \ar@{-} (12,4)
+	\endxy}
+\newcommand{\skwepullback}{\copy\skwepullbackbox}
+
+\newbox\ksewpullbackbox
+\setbox\ksewpullbackbox=\hbox{\xy 0;<1mm,0mm>: \POS(0,-8)\ar@{-} (0,-4) \ar@{-} (4,-4)
+	\endxy}
+\newcommand{\ksewpullback}{\copy\ksewpullbackbox}
+
+\newbox\pullbackbox
+\setbox\pullbackbox=\hbox{\xy 0;<1mm,0mm>: \POS(4,0)\ar@{-} (0,0) \ar@{-} (4,4)
+	\endxy}
+\newcommand{\pullback}{\copy\pullbackbox}
+
+\newbox\pullbackabox
+\setbox\pullbackabox=\hbox{\xy 0;<1mm,0mm>: \POS(-4,-6)\ar@{-} (-8,-6) \ar@{-} (-4,-2)
+	\endxy}
+\newcommand{\pullbacka}{\copy\pullbackabox}
+
+\newbox\pullbackbbox
+\setbox\pullbackbbox=\hbox{\xy 0;<1mm,0mm>: \POS(-4,-4)\ar@{-} (-8,-4) \ar@{-} (-4,0)
+	\endxy}
+\newcommand{\pullbackb}{\copy\pullbackbbox}
+
+\newbox\pullbackcbox
+\setbox\pullbackcbox=\hbox{\xy 0;<1mm,0mm>: \POS(4,-7)\ar@{-} (0,-7) \ar@{-} (4,-3)
+	\endxy}
+\newcommand{\pullbackc}{\copy\pullbackcbox}
+
+
+\newbox\pullbackdbox
+\setbox\pullbackdbox=\hbox{\xy 0;<1mm,0mm>:\POS(-10,-6)\ar@{-} (-14,-6) \ar@{-} (-10,-2)
+	\endxy}
+\newcommand{\pullbackd}{\copy\pullbackdbox}
+
+
+\newbox\pushoutbox
+\setbox\pushoutbox=\hbox{\xy 0;<1mm,0mm>: \POS(0,4)\ar@{-} (0,0) \ar@{-} (4,4)
+	\endxy}
+\newcommand{\pushout}{\copy\pushoutbox}
+
+\newbox\pushoutabox
+\setbox\pushoutabox=\hbox{\xy 0;<1mm,0mm>: \POS(2,8)\ar@{-} (2,4) \ar@{-} (8,8)
+	\endxy}
+\newcommand{\pushouta}{\copy\pushoutabox}
+
+\addto\captionsrussian{% Replace "english" with the language you use
   \renewcommand{\contentsname}%
     {Содержание}%
 }
 
-\parindent = 1cm
-\DeclareMathOperator{\End}{\mathrm{End}_{\mathbb{K}}}
-
-\newtheorem*{definition}{Определение}
-\newtheorem*{theorem}{\hspace*{\parindent}Теорема}
-\theoremstyle{definition}
-\newtheorem*{prof}{\hspace*{\parindent}Доказательство}
-\newtheorem*{consequense}{Следствие}
-\newtheorem*{lemma}{Лемма}
-\newtheorem*{subtheorem}{Утверждение}
-\newtheorem*{remark}{Замечание}
-
-
-\usepackage{titlesec}
-\titleformat{\section}{\LARGE \bfseries}{\thesection}{1em}{}
-\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}
-
 
 \begin{document}
 
-\fontsize{14pt}{20pt}\selectfont
+{\fontsize{14pt}{18}\selectfont
+  
+  \thispagestyle{empty}
+  \begin{center}
+		
+		\vfill\vfill \ \\ {%\Large
+			МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ \\
+			имени М.В.~ЛОМОНОСОВА
+			
+			\medskip
+			
+			МЕХАНИКО-МАТЕМАТИЧЕСКИЙ ФАКУЛЬТЕТ
 
-\begin{titlepage}
+			\medskip
+			
+			
+			КАФЕДРА ВЫСШЕЙ АЛГЕБРЫ
+
+		}
+
+
+
+{%\Large
+	\vfill {%\Large
+		
+		КУРСОВАЯ РАБОТА
+		
+	}
+		
+		
+		\vfill{\Large
+			\textbf{Квантовые симметрии \linebreak в алгебре тройных чисел} 
+		}
+		
+			
+
+			\vfill
+			\begin{flushright}
+				\begin{tabular}{r}
+					Выполнил:\\
+студент 211 группы \\
+Зазовский Леон Станиславович
+					\\
+					\\
+					Научный руководитель: \\
+					доктор физико-математических наук, \\
+					профессор Гордиенко Алексей Сергеевич
+				\end{tabular}
+			\end{flushright}
+			
+		}
+		
+		\vfill\vfill\vfill\vfill 
+		
+		Москва
+		
+		 2025
+	\end{center}
+}
+
 \newpage
 
-\begin{center}
-Московский государственный университет\\
-имени М.В.Ломоносова
-\end{center}
+\thispagestyle{empty}
+\tableofcontents
 
-\begin{center}
-Механико-математический факультет \\
-Кафедра высшей алгебры \\ 
-\end{center}
+\newpage
 
-\vspace{15em}
+\pagestyle{plain}
+\section{Введение}
 
-\begin{center}
-\textsc{\textbf{Квантовые симметрии \linebreak в алгебре тройных чисел}}
-\end{center}
+Во многих областях математики и физики (см., например, \cite{ArnoldBook, ModernGeometry, MurphyBook, HaagKastler}) находят своё применение \textit{алгебры}, то есть векторные пространства над некоторым полем $\mathbbm{k}$ (например, $\mathbbm{k}$ может быть полем $\mathbb{R}$ вещественных или $\mathbb{C}$ комплексных чисел), в которых задана бинарная операция внутреннего умноже­ния, линейная по каждому аргументу. 
 
-\vspace{15em}
+Часто алгебры, встречающиеся в приложениях, наделены некоторой дополнительной структурой или (обобщёнными) симметриями: действием (полу)группы эндоморфизмами и антиэндоморфизмами, (полу)групповой градуировкой или действием алгеб­ры Ли дифференцированиями (см., например, \cite{PolyakovBook, HaagBook, KakuBook, MajidBook}). Для работы с такими дополнительными структурами оказывается полезным понятие модульной и комодульной алгебры над алгеброй Хопфа и даже более общее понятие алгебры с обобщённым $H$-действием. В частности, понятие (ко)модульной алгебры позволяет изучать различные виды дополнительных структур на алгебрах одновременно.
 
+Кроме того, (ко)модульные алгебры естественным образом возникают в геометрии: если некоторая аффинная алгебраическая группа действует морфизмами на аффинном алгебраи­ческом многообразии (например, рассматриваются симметрии некоторой поверхности, задан­ной алгебраическими уравнениями), то алгебра регулярных функций (множество функций, которые можно определить при помощи многочленов от координат точки,
+с операциями сложения, умножения между собой и на скаляры) будет модульной алгеброй над групповой алгеброй этой группы и над универсальной обёртывающей алгебры Ли этой группы и комодульной алгеброй над алгеброй регулярных функций на аффинной алгебраической группе~\cite{Abe}.
 
+Обратим внимание на то, что в классическом случае алгебры регулярных функций на многообразиях коммутативны, так как для умножения функций выполнен перестановочный закон. Однако в новом направлении, которое получило название некоммутативной геометрии, рассмат­риваются <<некоммутативные пространства>>, т. е. такие пространства, алгебры регулярных функций которых некоммутативны. Поэтому изучение (ко)действий необязательно коммутатив­ных алгебр Хопфа на необязательно коммутативных алгебрах можно интерпретировать как изучение кван­товых симметрий некоммутативных пространств. Последние находят своё применение в теорети­ческой физике (см., например, \cite{ConnesMarcolli, Donatsos}).
 
-%\vbox{%
-%  \hfill%
-%    \vbox{%
-%        \hbox{Выполнил студент:}%
-%        \hbox{Зазовский Л.С.}%
-%        \hbox{211 группа}%
-%        \hbox{Научный руководитель:}%
-%        \hbox{проф. Гордиенко А.С.}%
-%    }%
-%}
-
-\begin{flushright}
-\begin{minipage}{.30\textwidth}
-Выполнил студент:\\
-\vbox{%
-    \hfill%
-    \vbox{%
-        \hbox{211 группы}%
-        \hbox{Зазовский Л.С.      }%
-    }%
-}
-Научный руководитель:\\
-\vbox{%
-    \hfill%
-    \vbox{%
-        \hbox{проф. Гордиенко А.С.}%
-    }%
-}
-\end{minipage}
-\end{flushright}
-
-
-
-\vspace{\fill}
-
-\begin{center}
-Москва \\2025
-\end{center}
-
-\end{titlepage}
-
-    \newpage
-    \tableofcontents
-    \fontsize{14pt}{20pt}\selectfont
-    \newpage
+\newpage
 
 \section{Конечно двойственная алгебра Хопфа}
 
@@ -150,7 +294,7 @@
     Двойственная система является базисом в $V^\circ$
 \end{theorem}
 
-\begin{prof}
+\begin{proof}
     
     Сначала докажем, что двойственная система полна в $V^\circ$. Рассмотрим некоторую линейную функцию $f$ из $V^\circ$.
     Тогда существует векторное подпространство $W$ такое, что $V$, раскладывается в прямую сумму ${V = W \oplus \mathrm{Ker} (f)}$.
@@ -168,7 +312,7 @@
     Теперь докажем линейную независимость двойственной системы. Рассмотрим линейную комбинацию некоторой конечной подсистемы $\lambda_{i_1}\varepsilon_{i_1} + \dots + \lambda_{i_n}\varepsilon_{i_n} = 0$. Подставим $e_{i_k}$, получим $\lambda_{i_k}\varepsilon_{i_k}(e_{i_k}) = 0$, а значит $\lambda_{i_k} = 0$. 
     Взяв все возможные $k$ от $1$ до $n$ получим, что все коэффициенты равны нулю, что означает линейную независимость этой подсистемы. Следовательно все конечные подсистемы линейно независимы, а значит и двойственная система линейно независима. \qed
 
-\end{prof}
+\end{proof}
 
 \begin{remark}
     В силу доказанной выше теоремы будем называть двойственную систему "--- конечно двойственным базисом.
@@ -179,19 +323,19 @@
     Пусть задано векторное пространство $V$ над полем $\mathbb{K}$. Тогда $V \cong V^\circ$
 \end{theorem}
 
-\begin{prof}
+\begin{proof}
     Выберем в $V$ базис $(e_i)_{i \in \Lambda}$ и соответсвующий ему конечно двойственный базис $(\varepsilon_i)_{i \in \Lambda}$
     Пусть $\varphi: V \to V^\circ$ "--- линейное отображение заданное на базисе $\varphi(e_i) := \varepsilon_i$. Очевидно, что $\varphi$ сюръективно.
 
     Докажем инъективность. Пусть $\varphi(a) = \varphi(b)$ для некоторых $a, b \in V$. Тогда $\varphi(a-b) = 0$. Разложим $a-b$ по базису $V$: $a-b = \lambda_{i_1}e_{i_1} + \dots + \lambda_{i_n}e_{i_n}$.
     Тогда $\varphi(\lambda_{i_1}e_{i_1} + \dots + \lambda_{i_n}e_{i_n}) = \lambda_{i_1}\varepsilon_{i_1} + \dots + \lambda_{i_n}\varepsilon_{i_n} = 0$. В силу линейной независимости $(\varepsilon_{i_k})_{k=1}^n$, получаем $\lambda_{i_1} =\dots=\lambda_{i_n} = 0$. Значит $a-b =0$, следовательно $\varphi$ инъективно. Тогда $\varphi$ изоморфизм. \qed
-\end{prof}
+\end{proof}
 
 \begin{theorem}
     Существует канонический изоморфизм $\varphi: V \to V^{\circ\circ}$.
 \end{theorem}
 
-\begin{prof}
+\begin{proof}
     Определим $\varphi: V \to V^{\circ\circ}$, как $\varphi(u)(\alpha):= \alpha(u)$, для любых $u \in V$ и $\alpha \in V^\circ$. 
     Докажем корректность определения, а именно тот факт, что $\varphi(u) \in V^{\circ\circ}$.
     Ядро $\varphi(u)$ это множество линейных функций $\alpha$ таких, что $\alpha(u) = 0$.
@@ -209,7 +353,7 @@
     $f(\varepsilon_j) = \lambda_j$, если для некоторого $k$ верно, что $j = i_k$, иначе $f(\varepsilon_j) = 0$. $\varphi(u)(\varepsilon_j) = \varepsilon_j(u) = \lambda_j$, если для некоторого $k$ верно, что $j = i_k$, иначе $\varphi(u)(\varepsilon_j) = \varepsilon_j(u) = 0$.
     Значит $f$ и $\varphi(u)$ совпадают на базисе, следовательно $f = \varphi(u)$. Тем самым мы доказали, что $\varphi$ сюръективен. \qed
     
-\end{prof}
+\end{proof}
 
 Для удобства рассуждений введём ещё одно понятие.
 
@@ -250,6 +394,18 @@
     \bigtriangleup\alpha(a \otimes b) = \alpha(ab) \label{str4}
 \end{eqnarray}
 
+Докажем полезную лемму 
+\begin{lemma}
+  Пусть задана алгебра Хопфа $H$ и группоподобный элемент $h \in H$. Если $h$ имеет конечный порядок как элемент группы, тогда его степени $1,\ h,\ \dots,\ h^{k-1}$ линейно независимы, где $k$ --- порядок элемента $h$. Если же $h$ имеет бесконечный порядок, то любая конечная систмеа из степеней $h$ линейно независима.
+\end{lemma}
+
+\begin{proof}
+  Доказывать будем по индукции.
+  База индукции, что система $1$ линейна независима, очевидна.
+  Пусть $1,\ h,\ \dots,\ h^n$ линейно независимы и $h^{n+1} \neq 1$. Предположим, что существуют $\lambda_i$ такие, что $h^{n+1} = \lambda_11+\lambda_2h + \dots + \lambda_{n+1}h^n$. Тогда получим, что  \[
+  \bigtriangleup h^{n+1} = \bigtiangleup (\lambda_11+\lambda_2h + \dots + \lambda_{n+1}h^n) = \lambda_1 1 \otimes 1 +\lambda_2 h \otimes h + \dots + \lambda_{n+1} h^n \otimes h^n = h^{n+1} \otimes h^{n+1} =  (\lambda_11+\lambda_2h + \dots + \lambda_{n+1}h^n) \otimes (\lambda_11+\lambda_2h + \dots + \lambda_{n+1}h^n)
+  \]
+  А значит для всех $i$ и $j$ верно, что $\lambda_i\lambda_j = \lambda_i \delta_{ij}$, где $\delta_{ij}$ --- символ Кронекера. Значит для любого $i$ $\lambda_i$ либо $0$, либо $1$. При этом если существуют $i_1,\ i_2$ такие, что 
 \newpage
 
 \section{Характеризация \texorpdfstring{$H$}{H}-модульной структуры}
@@ -262,9 +418,9 @@
 Тогда существуют такие $(\alpha_{ij})_{ij} \in H^\circ$, что \[\zeta(h) = 
 \begin{pmatrix}
     \varepsilon(h) && \alpha_{12}(h) && \dots  && \alpha_{1n}(h)\\
-    0              && \alpha_{22}(h) && \dots  && \alpha_{2n}(h)\\
-    \vdots         && \vdots         && \ddots && \vdots          \\
-    0              && \alpha_{n2}(h) && \dots  && \alpha_{nn}(h)\\
+    0    && \alpha_{22}(h) && \dots  && \alpha_{2n}(h)\\
+    \vdots    &&  \vdots       && \ddots  && \vdots       \\
+    0    && \alpha_{n2}(h) && \dots  && \alpha_{nn}(h)\\
 \end{pmatrix}
 \]
 
@@ -310,7 +466,7 @@ $$\bigtriangleup\alpha_{ij} = \sum\limits_{k=1}^{n}\alpha_{ik} \otimes \alpha_{k
 \end{theorem}
 
 
-\begin{prof}
+\begin{proof}
     Определим отображение $\zeta:H \to \End(A)$ из равенства $\zeta(h)(a) := \psi(h \otimes a)$.
     Выберем в $A$ базис $\bar 1, \bar x, \bar x^2$ и отождествим $\End(A)$ с $M_3(\mathbb{K})$. Тогда $\zeta(h)$ будет матрицей модульной структуры. Из условий теоремы следует, что матрица модульной структуры верхнетреугольная.
     Для удобства изложения переобозначим её нижеследующим образом: \[
@@ -374,7 +530,18 @@ $$\bigtriangleup\alpha_{ij} = \sum\limits_{k=1}^{n}\alpha_{ik} \otimes \alpha_{k
          0 & 0 & \beta^2(h)
     \end{pmatrix}\]
 
-    \noindentИз доказанного в предыдущем разделе \[\mathrm{dim} \ \zeta(H) = \mathrm{dim} \langle\varepsilon,\ \alpha,\ \beta,\ \alpha^2,\ \alpha\beta+\beta\alpha,\ \beta^2 \rangle \leq 6\]
+    В предыдущем разделе были доказаны разложения для результатов коумножения на элементах матрицы модульной структуры. Выпишем их для наших функций:
+    \begin{eqnarray*}
+        \bigtriangleup\varepsilon &=& \varepsilon \otimes \varepsilon\\
+        \bigtriangleup\alpha &=& \varepsilon \otimes \alpha + \alpha \otimes \beta\\
+        \bigtriangleup\beta &=& \beta \otimes \beta\\
+        \bigtriangleup\alpha^2 &=& \varepsilon \otimes \alpha^2 + \alpha \otimes (\alpha\beta+\beta\alpha) + \alpha^2 \otimes \beta^2\\
+        \bigtriangleup(\alpha\beta+\beta\alpha) &=& \beta \otimes (\alpha\beta+\beta\alpha) + (\alpha\beta+\beta\alpha)\otimes \beta^2\\
+        \bigtriangleup\beta^2 &=& \beta^2 \otimes \beta^2\\
+    \end{eqnarray*}
+    Значит функции $\varepsilon,\ \beta, \beta^2$ являются группоподобными.
+
+	\noindentИз доказанного в предыдущем разделе \[\mathrm{dim} \ \zeta(H) = \mathrm{dim} \langle\varepsilon,\ \alpha,\ \beta,\ \alpha^2,\ \alpha\beta+\beta\alpha,\ \beta^2 \rangle \leq 6\]
 
     \noindentЕсли $\mathrm{dim}\ \zeta(H) = 6$, тогда $\zeta(H)$~-- подалгебра всех верхнетреугольных матриц. Докажем, что в таком случае модульная структура $\psi$ эквивалентна модульной структуре \ref{all}.
 
@@ -886,6 +1053,93 @@ $$\bigtriangleup\alpha_{ij} = \sum\limits_{k=1}^{n}\alpha_{ik} \otimes \alpha_{k
     -4\alpha+\alpha = -3\alpha = 0
     \]
     Так как $\mathrm{char}\ \mathbb{K}\neq 3$, получаем $\alpha = 0$, что невозможно ввиду линейной независимости $\varepsilon,\ \alpha,\ \beta,\ \alpha^2,\ \alpha\beta+\beta\alpha$.
-\end{prof}
+\end{proof}
+
+
+\newpage
+\begin{thebibliography}{99}
+	
+\normalsize
+
+
+\bibitem{ArnoldBook} Арнольд В.\,И. Математические методы классической механики. М.: Эдиториал УРСС, 2003, 416~с.
+
+\bibitem{BahturinZaicevSegal} Бахтурин Ю.\,А., Зайцев М.\,В., Сегал С.\,К.
+Конечномерные простые градуированные алгебры. \textit{Матем. сб.}, \textbf{199}:7 (2008), 21--40.
+
+
+\bibitem{ModernGeometry}Дубровин~Б.\,А., Новиков~С.\,П., Фоменко~А.\,Т. Современная геометрия: в 3 т.
+М.: Эдиториал УРСС, 2000.
+
+
+\bibitem{MurphyBook} Мёрфи~Дж. $C^*$-алгебры и теория операторов. М.:~Факториал, 1997, 336~с.
+
+
+\bibitem{PolyakovBook} Поляков~А.\,М. Калибровочные поля и струны. Ижевск: Издательский дом <<Удмуртский университет>>, 1999, 312~с.
+
+
+\bibitem{HumphreysLieAlg}  Хамфриc Дж. Введение в теорию алгебр Ли и их представлений. М.: МЦНМО, 2003, 216 с. 
+
+\bibitem{Herstein} Херстейн~И. Некоммутативные кольца.
+М.: Мир, 1972, 192~с.
+
+\bibitem{Abe} Abe, E. Hopf algebras. Cambridge University Press, Cambridge, 1980.
+
+\bibitem{ASGordienko21ALAgoreJVercruysse}
+Agore, A.\,L., Gordienko, A.\,S., Vercruysse, J.
+$V$-universal Hopf algebras (co)acting on $\Omega$-algebras. \textit{Commun. Contemp. Math.},
+\textbf{25}:1 (2023), 2150095-1 -- 2150095-40. 
+
+\bibitem{ASGordienko24ALAgoreJVercruysse}
+Agore, A.\,L., Gordienko, A.\,S., Vercruysse, J.
+Lifting of locally initial objects and universal (co)acting Hopf algebras.
+\texttt{arXiv:2406.17677 [math.CT] 25 Jun 2024}.
+
+
+\bibitem{ConnesMarcolli} Connes, A., Marcolli, M. Quantum fields, noncommutative spaces and motives. (Книга готовится к печати, электронная версия \url{https://www.alainconnes.org/docs/bookwebfinal.pdf})
+
+
+\bibitem{Danara} D\u asc\u alescu, S., N\u ast\u asescu, C., Raianu, \c S.
+Hopf algebras: an introduction. New York, Marcel Dekker, Inc., 2001.
+
+
+\bibitem{Donatsos} Donatsos, D., Daskaloyannis, C. Quantum groups and their applications in nuclear physics. \textit{Progress in Particle and Nuclear Physics},  \textbf{43} (1999), 537--618.
+
+
+     \bibitem{ZaiGia} Giambruno, A., Zaicev, M.\,V.
+Polynomial identities and asymptotic methods.
+\textit{AMS Mathematical Surveys and Monographs.} \textbf{122},
+Providence, R.I., 2005, 352~pp.
+
+
+\bibitem{ASGordienko23}
+Gordienko, A.\,S.
+On a general notion of a polynomial identity and codimensions.
+\textit{J. Pure and Appl. Algebra}, \textbf{229}:1 (2025), 107814-1 -- 107814-27.
+%\texttt{arXiv:2404.15868 [math.RA] 24 Apr 2024}. 
+
+
+\bibitem{HaagBook} Haag, R. Local quantum physics: fields, particles, algebras.
+Springer-Verlag, Berlin, Heidelberg, 1996.
+
+ 
+\bibitem{HaagKastler} Haag, R., Kastler, D. An algebraic approach to quantum field theory.
+\textit{J. Math. Phys.}, \textbf{5} (1964), 848--861.
+
+
+\bibitem{KakuBook} Kaku, M. Introduction to superstrings and M-theory. Springer-Verlag, New York, 1999.
+
+
+\bibitem{MajidBook} Majid, S. Foundations of quantum group theory. Cambridge University Press, 1995.
+
+
+
+\bibitem{Montgomery} Montgomery, S. Hopf algebras and their actions on rings. \textit{CBMS Lecture Notes} \textbf{82}, Amer. Math. Soc., Providence, RI, 1993.
+
+
+\bibitem{Sweedler} Sweedler, M.\,E. Hopf Algebras. W.\,A. Benjamin, New York, 1969.
+
+
+\end{thebibliography}
 
 \end{document}
